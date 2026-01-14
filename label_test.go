@@ -25,11 +25,12 @@ func TestLabel(t *testing.T) {
 		is.True(t, strings.Contains(html, "peer-disabled:opacity-70"))
 	})
 
-	t.Run("adds custom class", func(t *testing.T) {
-		l := ui.Label(ui.LabelProps{Class: "my-custom-class"}, g.Text("Password"))
+	t.Run("merges custom class", func(t *testing.T) {
+		l := ui.Label(ui.LabelProps{}, h.Class("my-custom-class"), g.Text("Password"))
 		html := render(t, l)
 
 		is.True(t, strings.Contains(html, "my-custom-class"))
+		is.True(t, strings.Contains(html, "text-sm")) // base class still present
 	})
 
 	t.Run("accepts for attribute", func(t *testing.T) {
