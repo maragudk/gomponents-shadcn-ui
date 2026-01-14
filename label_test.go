@@ -25,12 +25,15 @@ func TestLabel(t *testing.T) {
 		is.True(t, strings.Contains(html, "peer-disabled:opacity-70"))
 	})
 
-	t.Run("merges custom class", func(t *testing.T) {
+	t.Run("merges custom class into single attribute", func(t *testing.T) {
 		l := ui.Label(ui.LabelProps{}, h.Class("my-custom-class"), g.Text("Password"))
 		html := render(t, l)
 
+		// Both classes present
 		is.True(t, strings.Contains(html, "my-custom-class"))
-		is.True(t, strings.Contains(html, "text-sm")) // base class still present
+		is.True(t, strings.Contains(html, "text-sm"))
+		// Merged into single class attribute
+		is.Equal(t, 1, strings.Count(html, "class="))
 	})
 
 	t.Run("accepts for attribute", func(t *testing.T) {
