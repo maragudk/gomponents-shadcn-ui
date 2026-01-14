@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	g "maragu.dev/gomponents"
-	h "maragu.dev/gomponents/html"
+	. "maragu.dev/gomponents"
+	. "maragu.dev/gomponents/html"
 	"maragu.dev/is"
 
 	ui "maragu.dev/gomponents-shadcn-ui"
@@ -13,40 +13,40 @@ import (
 
 func TestLabel(t *testing.T) {
 	t.Run("renders a label with default styling", func(t *testing.T) {
-		l := ui.Label(ui.LabelProps{}, g.Text("Email"))
-		html := render(t, l)
+		l := ui.Label(ui.LabelProps{}, Text("Email"))
+		got := render(t, l)
 
-		is.True(t, strings.Contains(html, "<label"))
-		is.True(t, strings.Contains(html, "Email"))
-		is.True(t, strings.Contains(html, "text-sm"))
-		is.True(t, strings.Contains(html, "font-medium"))
-		is.True(t, strings.Contains(html, "leading-none"))
-		is.True(t, strings.Contains(html, "peer-disabled:cursor-not-allowed"))
-		is.True(t, strings.Contains(html, "peer-disabled:opacity-70"))
+		is.True(t, strings.Contains(got, "<label"))
+		is.True(t, strings.Contains(got, "Email"))
+		is.True(t, strings.Contains(got, "text-sm"))
+		is.True(t, strings.Contains(got, "font-medium"))
+		is.True(t, strings.Contains(got, "leading-none"))
+		is.True(t, strings.Contains(got, "peer-disabled:cursor-not-allowed"))
+		is.True(t, strings.Contains(got, "peer-disabled:opacity-70"))
 	})
 
 	t.Run("merges custom class into single attribute", func(t *testing.T) {
-		l := ui.Label(ui.LabelProps{}, h.Class("my-custom-class"), g.Text("Password"))
-		html := render(t, l)
+		l := ui.Label(ui.LabelProps{}, Class("my-custom-class"), Text("Password"))
+		got := render(t, l)
 
 		// Both classes present
-		is.True(t, strings.Contains(html, "my-custom-class"))
-		is.True(t, strings.Contains(html, "text-sm"))
+		is.True(t, strings.Contains(got, "my-custom-class"))
+		is.True(t, strings.Contains(got, "text-sm"))
 		// Merged into single class attribute
-		is.Equal(t, 1, strings.Count(html, "class="))
+		is.Equal(t, 1, strings.Count(got, "class="))
 	})
 
 	t.Run("accepts for attribute", func(t *testing.T) {
-		l := ui.Label(ui.LabelProps{}, h.For("email-input"), g.Text("Email"))
-		html := render(t, l)
+		l := ui.Label(ui.LabelProps{}, For("email-input"), Text("Email"))
+		got := render(t, l)
 
-		is.True(t, strings.Contains(html, `for="email-input"`))
+		is.True(t, strings.Contains(got, `for="email-input"`))
 	})
 
 	t.Run("accepts additional attributes", func(t *testing.T) {
-		l := ui.Label(ui.LabelProps{}, h.ID("my-label"), g.Text("Username"))
-		html := render(t, l)
+		l := ui.Label(ui.LabelProps{}, ID("my-label"), Text("Username"))
+		got := render(t, l)
 
-		is.True(t, strings.Contains(html, `id="my-label"`))
+		is.True(t, strings.Contains(got, `id="my-label"`))
 	})
 }
