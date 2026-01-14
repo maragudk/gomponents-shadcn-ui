@@ -36,17 +36,11 @@ func TestLabel(t *testing.T) {
 		is.Equal(t, 1, strings.Count(got, "class="))
 	})
 
-	t.Run("accepts for attribute", func(t *testing.T) {
-		l := ui.Label(ui.LabelProps{}, For("email-input"), Text("Email"))
+	t.Run("accepts additional attributes", func(t *testing.T) {
+		l := ui.Label(ui.LabelProps{}, For("email-input"), ID("my-label"), Text("Email"))
 		got := render(t, l)
 
 		is.True(t, strings.Contains(got, `for="email-input"`))
-	})
-
-	t.Run("accepts additional attributes", func(t *testing.T) {
-		l := ui.Label(ui.LabelProps{}, ID("my-label"), Text("Username"))
-		got := render(t, l)
-
 		is.True(t, strings.Contains(got, `id="my-label"`))
 	})
 }
