@@ -48,6 +48,7 @@ func page() g.Node {
 			h.Div(
 				h.Class("container mx-auto py-12 px-4 max-w-4xl"),
 				header(),
+				badgeSection(),
 				buttonSection(),
 				labelSection(),
 			),
@@ -71,6 +72,25 @@ func header() g.Node {
 				g.Text("gomponents"),
 			),
 			g.Text("."),
+		),
+	)
+}
+
+func badgeSection() g.Node {
+	return section("Badge",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Displays a badge or a component that looks like a badge."),
+		),
+
+		subsection("Variants",
+			h.Div(
+				h.Class("flex flex-wrap gap-4"),
+				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantDefault}, g.Text("Default")),
+				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantSecondary}, g.Text("Secondary")),
+				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantDestructive}, g.Text("Destructive")),
+				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantOutline}, g.Text("Outline")),
+			),
 		),
 	)
 }
