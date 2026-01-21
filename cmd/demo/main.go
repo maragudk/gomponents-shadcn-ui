@@ -6,6 +6,7 @@ import (
 
 	g "maragu.dev/gomponents"
 	c "maragu.dev/gomponents/components"
+	data "maragu.dev/gomponents-datastar"
 	h "maragu.dev/gomponents/html"
 
 	ui "maragu.dev/gomponents-shadcn-ui"
@@ -42,6 +43,7 @@ func page() g.Node {
 		Language:    "en",
 		Head: []g.Node{
 			h.Link(h.Rel("stylesheet"), h.Href("styles.css")),
+			h.Script(h.Type("module"), h.Src("https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.0-RC.7/bundles/datastar.js")),
 		},
 		Body: []g.Node{
 			h.Class("bg-background text-foreground min-h-screen"),
@@ -64,6 +66,7 @@ func page() g.Node {
 				skeletonSection(),
 				tableSection(),
 				textareaSection(),
+				interactiveSection(),
 			),
 		},
 	})
@@ -623,6 +626,87 @@ func textareaSection() g.Node {
 
 		subsection("Disabled",
 			ui.Textarea(ui.TextareaProps{}, h.Class("max-w-sm"), h.Disabled(), h.Placeholder("Disabled")),
+		),
+	)
+}
+
+func interactiveSection() g.Node {
+	return section("Interactive Examples",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Examples using "),
+			h.A(
+				h.Href("https://data-star.dev"),
+				h.Class("underline hover:text-foreground"),
+				g.Text("Datastar"),
+			),
+			g.Text(" for interactivity via "),
+			h.A(
+				h.Href("https://github.com/maragudk/gomponents-datastar"),
+				h.Class("underline hover:text-foreground"),
+				g.Text("gomponents-datastar"),
+			),
+			g.Text("."),
+		),
+
+		subsection("Counter",
+			h.Div(
+				data.Signals(map[string]any{"count": 0}),
+				h.Class("flex items-center gap-4"),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeIcon},
+					data.On("click", "$count--"),
+					g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>`),
+				),
+				h.Span(h.Class("text-2xl font-bold w-12 text-center"), data.Text("$count")),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeIcon},
+					data.On("click", "$count++"),
+					g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`),
+				),
+			),
+		),
+
+		subsection("Toggle Visibility",
+			h.Div(
+				data.Signals(map[string]any{"visible": true}),
+				h.Class("flex flex-col gap-4"),
+				ui.Button(ui.ButtonProps{},
+					data.On("click", "$visible = !$visible"),
+					data.Text("$visible ? 'Hide Alert' : 'Show Alert'"),
+				),
+				h.Div(
+					data.Show("$visible"),
+					ui.Alert(ui.AlertProps{},
+						g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`),
+						ui.AlertTitle(ui.AlertTitleProps{}, g.Text("Toggled Alert")),
+						ui.AlertDescription(ui.AlertDescriptionProps{}, g.Text("This alert can be shown or hidden using Datastar.")),
+					),
+				),
+			),
+		),
+
+		subsection("Dynamic Progress",
+			h.Div(
+				data.Signals(map[string]any{"progress": 33}),
+				h.Class("flex flex-col gap-4 w-60"),
+				h.Div(
+					h.Class("bg-primary/20 relative h-2 w-full overflow-hidden rounded-full"),
+					h.Div(
+						h.Class("bg-primary h-full transition-all"),
+						data.Style("width", "$progress + '%'"),
+					),
+				),
+				h.Div(
+					h.Class("flex gap-2"),
+					ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm},
+						data.On("click", "$progress = Math.max(0, $progress - 10)"),
+						g.Text("-10"),
+					),
+					ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm},
+						data.On("click", "$progress = Math.min(100, $progress + 10)"),
+						g.Text("+10"),
+					),
+				),
+			),
 		),
 	)
 }
