@@ -53,6 +53,7 @@ func page() g.Node {
 				badgeSection(),
 				buttonSection(),
 				cardSection(),
+				checkboxSection(),
 				inputSection(),
 				labelSection(),
 				separatorSection(),
@@ -256,6 +257,39 @@ func cardSection() g.Node {
 				ui.CardContent(ui.CardContentProps{},
 					h.P(g.Text("Your notifications will appear here.")),
 				),
+			),
+		),
+	)
+}
+
+func checkboxSection() g.Node {
+	return section("Checkbox",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("A control that allows the user to toggle between checked and not checked."),
+		),
+
+		subsection("Default",
+			h.Div(
+				h.Class("flex items-center space-x-2"),
+				ui.Checkbox(ui.CheckboxProps{}, h.ID("terms")),
+				ui.Label(ui.LabelProps{}, h.For("terms"), g.Text("Accept terms and conditions")),
+			),
+		),
+
+		subsection("Checked",
+			h.Div(
+				h.Class("flex items-center space-x-2"),
+				ui.Checkbox(ui.CheckboxProps{}, h.ID("newsletter"), h.Checked()),
+				ui.Label(ui.LabelProps{}, h.For("newsletter"), g.Text("Subscribe to newsletter")),
+			),
+		),
+
+		subsection("Disabled",
+			h.Div(
+				h.Class("flex items-center space-x-2"),
+				ui.Checkbox(ui.CheckboxProps{}, h.ID("disabled-checkbox"), h.Disabled()),
+				ui.Label(ui.LabelProps{}, h.For("disabled-checkbox"), g.Text("Disabled")),
 			),
 		),
 	)
