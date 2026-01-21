@@ -33,6 +33,11 @@ When working on issues:
 
 8. **Address review feedback** (see Code Review Workflow below)
 
+## Component Development
+
+- When adding a new component, update the demo page in `cmd/demo/main.go`
+- When updating a component, check that any new style variables are added to `tailwind.css`
+
 ## Code Review Workflow
 
 When asked to review code on a branch:
