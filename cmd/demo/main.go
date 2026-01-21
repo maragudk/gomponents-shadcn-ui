@@ -62,6 +62,7 @@ func page() Node {
 				labelSection(),
 				paginationSection(),
 				progressSection(),
+				radioGroupSection(),
 				separatorSection(),
 				skeletonSection(),
 				switchSection(),
@@ -605,6 +606,45 @@ func progressSection() Node {
 	)
 }
 
+func radioGroupSection() Node {
+	return sectionWithSource("Radio Group", "radiogroup.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("A set of checkable buttons where only one can be checked at a time."),
+		),
+
+		subsection("Default",
+			ui.RadioGroup(ui.RadioGroupProps{},
+				Div(
+					Class("flex items-center space-x-2"),
+					ui.RadioGroupItem(ui.RadioGroupItemProps{}, ID("option-one"), Name("options"), Value("1"), Checked()),
+					ui.Label(ui.LabelProps{}, For("option-one"), Text("Option One")),
+				),
+				Div(
+					Class("flex items-center space-x-2"),
+					ui.RadioGroupItem(ui.RadioGroupItemProps{}, ID("option-two"), Name("options"), Value("2")),
+					ui.Label(ui.LabelProps{}, For("option-two"), Text("Option Two")),
+				),
+				Div(
+					Class("flex items-center space-x-2"),
+					ui.RadioGroupItem(ui.RadioGroupItemProps{}, ID("option-three"), Name("options"), Value("3")),
+					ui.Label(ui.LabelProps{}, For("option-three"), Text("Option Three")),
+				),
+			),
+		),
+
+		subsection("Disabled",
+			ui.RadioGroup(ui.RadioGroupProps{},
+				Div(
+					Class("flex items-center space-x-2"),
+					ui.RadioGroupItem(ui.RadioGroupItemProps{}, ID("disabled-one"), Name("disabled"), Value("1"), Disabled()),
+					ui.Label(ui.LabelProps{}, For("disabled-one"), Text("Disabled option")),
+				),
+			),
+		),
+	)
+}
+
 func separatorSection() Node {
 	return sectionWithSource("Separator", "separator.go",
 		P(
@@ -970,7 +1010,7 @@ func sectionWithSource(title, sourceFile string, children ...Node) Node {
 		)
 	}
 	return Section(
-		Class("mb-12"),
+		Class("mb-24"),
 		H2(
 			Class("text-2xl font-semibold mb-4 pb-2 border-b flex items-baseline"),
 			Group(headerContent),
