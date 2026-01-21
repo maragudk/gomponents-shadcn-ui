@@ -76,6 +76,7 @@ func page() Node {
 				popoverSection(),
 				progressSection(),
 				radioGroupSection(),
+				resizableSection(),
 				scrollAreaSection(),
 				selectSection(),
 				separatorSection(),
@@ -84,6 +85,7 @@ func page() Node {
 				sliderSection(),
 				switchSection(),
 				tableSection(),
+				toastSection(),
 				tabsSection(),
 				textareaSection(),
 				toggleSection(),
@@ -1356,6 +1358,53 @@ func radioGroupSection() Node {
 	)
 }
 
+func resizableSection() Node {
+	return sectionWithSource("Resizable", "resizable.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Accessible resizable panel groups and layouts with keyboard support."),
+		),
+
+		subsection("Horizontal",
+			ui.ResizablePanelGroup(ui.ResizablePanelGroupProps{},
+				Class("min-h-[200px] max-w-md rounded-lg border"),
+				ui.ResizablePanel(ui.ResizablePanelProps{DefaultSize: 50},
+					Div(
+						Class("flex h-full items-center justify-center p-6"),
+						Span(Class("font-semibold"), Text("One")),
+					),
+				),
+				ui.ResizableHandle(ui.ResizableHandleProps{WithHandle: true}),
+				ui.ResizablePanel(ui.ResizablePanelProps{DefaultSize: 50},
+					Div(
+						Class("flex h-full items-center justify-center p-6"),
+						Span(Class("font-semibold"), Text("Two")),
+					),
+				),
+			),
+		),
+
+		subsection("Vertical",
+			ui.ResizablePanelGroup(ui.ResizablePanelGroupProps{Direction: ui.ResizableDirectionVertical},
+				Class("min-h-[200px] max-w-md rounded-lg border"),
+				ui.ResizablePanel(ui.ResizablePanelProps{DefaultSize: 25},
+					Div(
+						Class("flex h-full items-center justify-center p-6"),
+						Span(Class("font-semibold"), Text("Header")),
+					),
+				),
+				ui.ResizableHandle(ui.ResizableHandleProps{WithHandle: true}),
+				ui.ResizablePanel(ui.ResizablePanelProps{DefaultSize: 75},
+					Div(
+						Class("flex h-full items-center justify-center p-6"),
+						Span(Class("font-semibold"), Text("Content")),
+					),
+				),
+			),
+		),
+	)
+}
+
 func scrollAreaSection() Node {
 	tags := []string{
 		"v1.0.0", "v1.0.1", "v1.0.2", "v1.1.0", "v1.2.0",
@@ -1819,6 +1868,97 @@ func tableSection() Node {
 					ui.TableRow(ui.TableRowProps{},
 						ui.TableCell(ui.TableCellProps{}, ColSpan("3"), Text("Total")),
 						ui.TableCell(ui.TableCellProps{}, Class("text-right"), Text("$750.00")),
+					),
+				),
+			),
+		),
+	)
+}
+
+func toastSection() Node {
+	return sectionWithSource("Toast", "toast.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("A succinct message that is displayed temporarily."),
+		),
+
+		subsection("Default",
+			Div(
+				data.Signals(map[string]any{"showToast": false}),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline},
+					data.On("click", "showToast = true; setTimeout(() => showToast = false, 5000)"),
+					Text("Show Toast"),
+				),
+				ui.ToastViewport(ui.ToastViewportProps{},
+					Div(
+						data.Show("showToast"),
+						ui.Toast(ui.ToastProps{},
+							Div(
+								Class("grid gap-1"),
+								ui.ToastTitle(ui.ToastTitleProps{}, Text("Scheduled: Catch up")),
+								ui.ToastDescription(ui.ToastDescriptionProps{}, Text("Friday, February 10, 2023 at 5:57 PM")),
+							),
+							ui.ToastClose(ui.ToastCloseProps{},
+								data.On("click", "showToast = false"),
+								Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`),
+							),
+						),
+					),
+				),
+			),
+		),
+
+		subsection("Destructive",
+			Div(
+				data.Signals(map[string]any{"showErrorToast": false}),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantDestructive},
+					data.On("click", "showErrorToast = true; setTimeout(() => showErrorToast = false, 5000)"),
+					Text("Show Error Toast"),
+				),
+				ui.ToastViewport(ui.ToastViewportProps{},
+					Div(
+						data.Show("showErrorToast"),
+						ui.Toast(ui.ToastProps{Variant: ui.ToastVariantDestructive},
+							Div(
+								Class("grid gap-1"),
+								ui.ToastTitle(ui.ToastTitleProps{}, Text("Error")),
+								ui.ToastDescription(ui.ToastDescriptionProps{}, Text("Something went wrong. Please try again.")),
+							),
+							ui.ToastClose(ui.ToastCloseProps{},
+								data.On("click", "showErrorToast = false"),
+								Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`),
+							),
+						),
+					),
+				),
+			),
+		),
+
+		subsection("With Action",
+			Div(
+				data.Signals(map[string]any{"showActionToast": false}),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline},
+					data.On("click", "showActionToast = true"),
+					Text("Show Toast with Action"),
+				),
+				ui.ToastViewport(ui.ToastViewportProps{},
+					Div(
+						data.Show("showActionToast"),
+						ui.Toast(ui.ToastProps{},
+							Div(
+								Class("grid gap-1"),
+								ui.ToastTitle(ui.ToastTitleProps{}, Text("Event has been created")),
+								ui.ToastDescription(ui.ToastDescriptionProps{}, Text("Sunday, December 03, 2023 at 9:00 AM")),
+							),
+							ui.ToastAction(ui.ToastActionProps{},
+								data.On("click", "showActionToast = false"),
+								Text("Undo"),
+							),
+							ui.ToastClose(ui.ToastCloseProps{},
+								data.On("click", "showActionToast = false"),
+								Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`),
+							),
+						),
 					),
 				),
 			),
