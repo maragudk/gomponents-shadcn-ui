@@ -53,6 +53,7 @@ func page() g.Node {
 				badgeSection(),
 				buttonSection(),
 				cardSection(),
+				inputSection(),
 				labelSection(),
 				separatorSection(),
 				skeletonSection(),
@@ -259,6 +260,39 @@ func cardSection() g.Node {
 	)
 }
 
+func inputSection() g.Node {
+	return section("Input",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Displays a form input field or a component that looks like an input field."),
+		),
+
+		subsection("Default",
+			ui.Input(ui.InputProps{}, h.Class("max-w-sm"), h.Placeholder("Email")),
+		),
+
+		subsection("With Label",
+			h.Div(
+				h.Class("flex flex-col gap-2 max-w-sm"),
+				ui.Label(ui.LabelProps{}, h.For("email-input"), g.Text("Email")),
+				ui.Input(ui.InputProps{}, h.Type("email"), h.ID("email-input"), h.Placeholder("Enter your email")),
+			),
+		),
+
+		subsection("Disabled",
+			ui.Input(ui.InputProps{}, h.Class("max-w-sm"), h.Disabled(), h.Placeholder("Disabled")),
+		),
+
+		subsection("File Input",
+			h.Div(
+				h.Class("flex flex-col gap-2 max-w-sm"),
+				ui.Label(ui.LabelProps{}, h.For("file-input"), g.Text("Picture")),
+				ui.Input(ui.InputProps{}, h.Type("file"), h.ID("file-input")),
+			),
+		),
+	)
+}
+
 func labelSection() g.Node {
 	return section("Label",
 		h.P(
@@ -270,12 +304,7 @@ func labelSection() g.Node {
 			h.Div(
 				h.Class("flex flex-col gap-2"),
 				ui.Label(ui.LabelProps{}, h.For("email"), g.Text("Email")),
-				h.Input(
-					h.Type("email"),
-					h.ID("email"),
-					h.Placeholder("Enter your email"),
-					h.Class("flex h-9 w-full max-w-sm rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"),
-				),
+				ui.Input(ui.InputProps{}, h.Type("email"), h.ID("email"), h.Placeholder("Enter your email"), h.Class("max-w-sm")),
 			),
 		),
 	)
