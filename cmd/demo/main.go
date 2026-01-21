@@ -48,6 +48,7 @@ func page() g.Node {
 			h.Div(
 				h.Class("container mx-auto py-12 px-4 max-w-4xl"),
 				header(),
+				alertSection(),
 				avatarSection(),
 				badgeSection(),
 				buttonSection(),
@@ -76,6 +77,31 @@ func header() g.Node {
 				g.Text("gomponents"),
 			),
 			g.Text("."),
+		),
+	)
+}
+
+func alertSection() g.Node {
+	return section("Alert",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Displays a callout for user attention."),
+		),
+
+		subsection("Default",
+			ui.Alert(ui.AlertProps{},
+				g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`),
+				ui.AlertTitle(ui.AlertTitleProps{}, g.Text("Heads up!")),
+				ui.AlertDescription(ui.AlertDescriptionProps{}, g.Text("You can add components to your app using the cli.")),
+			),
+		),
+
+		subsection("Destructive",
+			ui.Alert(ui.AlertProps{Variant: ui.AlertVariantDestructive},
+				g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>`),
+				ui.AlertTitle(ui.AlertTitleProps{}, g.Text("Error")),
+				ui.AlertDescription(ui.AlertDescriptionProps{}, g.Text("Your session has expired. Please log in again.")),
+			),
 		),
 	)
 }
