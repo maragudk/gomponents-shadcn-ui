@@ -73,6 +73,7 @@ func page() Node {
 				textareaSection(),
 				toggleSection(),
 				toggleGroupSection(),
+				tooltipSection(),
 			),
 		},
 	})
@@ -1166,6 +1167,21 @@ func toggleGroupSection() Node {
 					ui.ToggleGroupItem(ui.ToggleGroupItemProps{Variant: ui.ToggleVariantOutline, Size: ui.ToggleSizeLg}, Text("S")),
 					ui.ToggleGroupItem(ui.ToggleGroupItemProps{Variant: ui.ToggleVariantOutline, Size: ui.ToggleSizeLg}, Text("M")),
 					ui.ToggleGroupItem(ui.ToggleGroupItemProps{Variant: ui.ToggleVariantOutline, Size: ui.ToggleSizeLg}, Text("L")),
+				),
+			),
+		),
+	)
+}
+
+func tooltipSection() Node {
+	return sectionWithSource("Tooltip", "tooltip.go",
+		subsection("Default",
+			ui.Tooltip(ui.TooltipProps{},
+				ui.TooltipTrigger(ui.TooltipTriggerProps{},
+					ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline}, Text("Hover me")),
+				),
+				ui.TooltipContent(ui.TooltipContentProps{},
+					Text("This is a tooltip"),
 				),
 			),
 		),
