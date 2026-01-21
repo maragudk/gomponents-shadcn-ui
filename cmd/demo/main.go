@@ -73,6 +73,7 @@ func page() Node {
 				popoverSection(),
 				progressSection(),
 				radioGroupSection(),
+				scrollAreaSection(),
 				selectSection(),
 				separatorSection(),
 				skeletonSection(),
@@ -1149,6 +1150,74 @@ func radioGroupSection() Node {
 					Class("flex items-center space-x-2"),
 					ui.RadioGroupItem(ui.RadioGroupItemProps{}, ID("disabled-one"), Name("disabled"), Value("1"), Disabled()),
 					ui.Label(ui.LabelProps{}, For("disabled-one"), Text("Disabled option")),
+				),
+			),
+		),
+	)
+}
+
+func scrollAreaSection() Node {
+	tags := []string{
+		"v1.0.0", "v1.0.1", "v1.0.2", "v1.1.0", "v1.2.0",
+		"v1.2.1", "v1.3.0", "v1.4.0", "v1.5.0", "v2.0.0",
+		"v2.0.1", "v2.1.0", "v2.2.0", "v2.3.0", "v2.4.0",
+	}
+
+	tagItems := make([]Node, len(tags))
+	for i, tag := range tags {
+		tagItems[i] = Div(
+			Class("text-sm"),
+			Text(tag),
+		)
+	}
+
+	return sectionWithSource("Scroll Area", "scrollarea.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Augments native scroll functionality for custom, cross-browser styling."),
+		),
+
+		subsection("Vertical",
+			ui.ScrollArea(ui.ScrollAreaProps{},
+				Class("h-72 w-48 rounded-md border"),
+				Div(
+					Class("p-4"),
+					H4(Class("mb-4 text-sm font-medium leading-none"), Text("Tags")),
+					Group(tagItems),
+				),
+			),
+		),
+
+		subsection("Horizontal",
+			ui.ScrollArea(ui.ScrollAreaProps{Orientation: ui.ScrollAreaOrientationHorizontal},
+				Class("w-96 whitespace-nowrap rounded-md border"),
+				Div(
+					Class("flex w-max space-x-4 p-4"),
+					Div(
+						Class("w-[150px] shrink-0 rounded-md border p-4"),
+						H4(Class("text-sm font-medium"), Text("Item 1")),
+						P(Class("text-sm text-muted-foreground"), Text("Description here")),
+					),
+					Div(
+						Class("w-[150px] shrink-0 rounded-md border p-4"),
+						H4(Class("text-sm font-medium"), Text("Item 2")),
+						P(Class("text-sm text-muted-foreground"), Text("Description here")),
+					),
+					Div(
+						Class("w-[150px] shrink-0 rounded-md border p-4"),
+						H4(Class("text-sm font-medium"), Text("Item 3")),
+						P(Class("text-sm text-muted-foreground"), Text("Description here")),
+					),
+					Div(
+						Class("w-[150px] shrink-0 rounded-md border p-4"),
+						H4(Class("text-sm font-medium"), Text("Item 4")),
+						P(Class("text-sm text-muted-foreground"), Text("Description here")),
+					),
+					Div(
+						Class("w-[150px] shrink-0 rounded-md border p-4"),
+						H4(Class("text-sm font-medium"), Text("Item 5")),
+						P(Class("text-sm text-muted-foreground"), Text("Description here")),
+					),
 				),
 			),
 		),
