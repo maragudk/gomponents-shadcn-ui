@@ -66,7 +66,6 @@ func page() Node {
 				skeletonSection(),
 				tableSection(),
 				textareaSection(),
-				interactiveSection(),
 			),
 		},
 	})
@@ -125,6 +124,25 @@ func alertSection() Node {
 				Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>`),
 				ui.AlertTitle(ui.AlertTitleProps{}, Text("Error")),
 				ui.AlertDescription(ui.AlertDescriptionProps{}, Text("Your session has expired. Please log in again.")),
+			),
+		),
+
+		subsection("Auto-Dismiss Notification",
+			Div(
+				data.Signals(map[string]any{"notification": false}),
+				Class("flex flex-col gap-4"),
+				ui.Button(ui.ButtonProps{},
+					data.On("click", "$notification = true; setTimeout(() => $notification = false, 3000)"),
+					Text("Show Notification"),
+				),
+				Div(
+					data.Show("$notification"),
+					ui.Alert(ui.AlertProps{},
+						Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`),
+						ui.AlertTitle(ui.AlertTitleProps{}, Text("Success!")),
+						ui.AlertDescription(ui.AlertDescriptionProps{}, Text("Your action was completed. This alert will dismiss in 3 seconds.")),
+					),
+				),
 			),
 		),
 	)
@@ -321,6 +339,22 @@ func buttonSection() Node {
 				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline}, Disabled(), Text("Disabled")),
 			),
 		),
+
+		subsection("Counter",
+			Div(
+				data.Signals(map[string]any{"count": 0}),
+				Class("flex items-center gap-4"),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeIcon},
+					data.On("click", "$count--"),
+					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>`),
+				),
+				Span(Class("text-2xl font-bold w-12 text-center"), data.Text("$count")),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeIcon},
+					data.On("click", "$count++"),
+					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`),
+				),
+			),
+		),
 	)
 }
 
@@ -393,6 +427,25 @@ func checkboxSection() Node {
 				ui.Label(ui.LabelProps{}, For("disabled-checkbox"), Text("Disabled")),
 			),
 		),
+
+		subsection("Interactive",
+			Div(
+				data.Signals(map[string]any{"checked": false}),
+				Class("flex flex-col gap-4"),
+				Div(
+					Class("flex items-center space-x-2"),
+					ui.Checkbox(ui.CheckboxProps{},
+						ID("interactive-checkbox"),
+						data.Bind("checked"),
+					),
+					ui.Label(ui.LabelProps{}, For("interactive-checkbox"), Text("I agree to the terms")),
+				),
+				Span(
+					Class("text-sm text-muted-foreground"),
+					data.Text("$checked ? 'You have agreed!' : 'Please check the box'"),
+				),
+			),
+		),
 	)
 }
 
@@ -424,6 +477,23 @@ func inputSection() Node {
 				Class("flex flex-col gap-2 max-w-sm"),
 				ui.Label(ui.LabelProps{}, For("file-input"), Text("Picture")),
 				ui.Input(ui.InputProps{}, Type("file"), ID("file-input")),
+			),
+		),
+
+		subsection("Live Binding",
+			Div(
+				data.Signals(map[string]any{"name": ""}),
+				Class("flex flex-col gap-4 max-w-sm"),
+				ui.Input(ui.InputProps{},
+					Placeholder("Enter your name"),
+					data.Bind("name"),
+				),
+				P(
+					Class("text-sm text-muted-foreground"),
+					Text("Hello, "),
+					Span(data.Text("$name || 'stranger'")),
+					Text("!"),
+				),
 			),
 		),
 	)
@@ -504,6 +574,31 @@ func progressSection() Node {
 				ui.Progress(ui.ProgressProps{Value: 100}),
 			),
 		),
+
+		subsection("Interactive",
+			Div(
+				data.Signals(map[string]any{"progress": 33}),
+				Class("flex flex-col gap-4 w-60"),
+				Div(
+					Class("bg-primary/20 relative h-2 w-full overflow-hidden rounded-full"),
+					Div(
+						Class("bg-primary h-full transition-all"),
+						data.Attr("style", "'width:' + $progress + '%'"),
+					),
+				),
+				Div(
+					Class("flex gap-2"),
+					ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm},
+						data.On("click", "$progress = Math.max(0, $progress - 10)"),
+						Text("-10"),
+					),
+					ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm},
+						data.On("click", "$progress = Math.min(100, $progress + 10)"),
+						Text("+10"),
+					),
+				),
+			),
+		),
 	)
 }
 
@@ -563,6 +658,43 @@ func skeletonSection() Node {
 					Class("space-y-2"),
 					ui.Skeleton(ui.SkeletonProps{}, Class("h-4 w-[250px]")),
 					ui.Skeleton(ui.SkeletonProps{}, Class("h-4 w-[200px]")),
+				),
+			),
+		),
+
+		subsection("Loading State",
+			Div(
+				data.Signals(map[string]any{"loading": true}),
+				Class("flex flex-col gap-4"),
+				ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm},
+					data.On("click", "$loading = !$loading"),
+					data.Text("$loading ? 'Show Content' : 'Show Skeleton'"),
+				),
+				Div(
+					data.Show("$loading"),
+					Div(
+						Class("flex items-center space-x-4"),
+						ui.Skeleton(ui.SkeletonProps{}, Class("h-12 w-12 rounded-full")),
+						Div(
+							Class("space-y-2"),
+							ui.Skeleton(ui.SkeletonProps{}, Class("h-4 w-[250px]")),
+							ui.Skeleton(ui.SkeletonProps{}, Class("h-4 w-[200px]")),
+						),
+					),
+				),
+				Div(
+					data.Show("!$loading"),
+					Div(
+						Class("flex items-center space-x-4"),
+						ui.Avatar(ui.AvatarProps{},
+							ui.AvatarFallback(ui.AvatarFallbackProps{}, Text("CN")),
+						),
+						Div(
+							Class("space-y-1"),
+							P(Class("text-sm font-medium leading-none"), Text("Sofia Davis")),
+							P(Class("text-sm text-muted-foreground"), Text("sofia@example.com")),
+						),
+					),
 				),
 			),
 		),
@@ -641,91 +773,6 @@ func textareaSection() Node {
 			ui.Textarea(ui.TextareaProps{}, Class("max-w-sm"), Disabled(), Placeholder("Disabled")),
 		),
 	)
-}
-
-func interactiveSection() Node {
-	return section("Interactive Examples",
-		P(
-			Class("text-muted-foreground mb-6"),
-			Text("Examples using "),
-			A(
-				Href("https://data-star.dev"),
-				Class("underline hover:text-foreground"),
-				Text("Datastar"),
-			),
-			Text(" for interactivity via "),
-			A(
-				Href("https://github.com/maragudk/gomponents-datastar"),
-				Class("underline hover:text-foreground"),
-				Text("gomponents-datastar"),
-			),
-			Text("."),
-		),
-
-		subsection("Counter",
-			Div(
-				data.Signals(map[string]any{"count": 0}),
-				Class("flex items-center gap-4"),
-				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeIcon},
-					data.On("click", "$count--"),
-					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>`),
-				),
-				Span(Class("text-2xl font-bold w-12 text-center"), data.Text("$count")),
-				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeIcon},
-					data.On("click", "$count++"),
-					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`),
-				),
-			),
-		),
-
-		subsection("Toggle Visibility",
-			Div(
-				data.Signals(map[string]any{"visible": true}),
-				Class("flex flex-col gap-4"),
-				ui.Button(ui.ButtonProps{},
-					data.On("click", "$visible = !$visible"),
-					data.Text("$visible ? 'Hide Alert' : 'Show Alert'"),
-				),
-				Div(
-					data.Show("$visible"),
-					ui.Alert(ui.AlertProps{},
-						Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`),
-						ui.AlertTitle(ui.AlertTitleProps{}, Text("Toggled Alert")),
-						ui.AlertDescription(ui.AlertDescriptionProps{}, Text("This alert can be shown or hidden using Datastar.")),
-					),
-				),
-			),
-		),
-
-		subsection("Dynamic Progress",
-			Div(
-				data.Signals(map[string]any{"progress": 33}),
-				Class("flex flex-col gap-4 w-60"),
-				Div(
-					Class("bg-primary/20 relative h-2 w-full overflow-hidden rounded-full"),
-					Div(
-						Class("bg-primary h-full transition-all"),
-						data.Style("width", "$progress + '%'"),
-					),
-				),
-				Div(
-					Class("flex gap-2"),
-					ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm},
-						data.On("click", "$progress = Math.max(0, $progress - 10)"),
-						Text("-10"),
-					),
-					ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm},
-						data.On("click", "$progress = Math.min(100, $progress + 10)"),
-						Text("+10"),
-					),
-				),
-			),
-		),
-	)
-}
-
-func section(title string, children ...Node) Node {
-	return sectionWithSource(title, "", children...)
 }
 
 func sectionWithSource(title, sourceFile string, children ...Node) Node {
