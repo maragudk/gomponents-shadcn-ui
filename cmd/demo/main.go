@@ -64,6 +64,7 @@ func page() Node {
 				progressSection(),
 				separatorSection(),
 				skeletonSection(),
+				switchSection(),
 				tableSection(),
 				textareaSection(),
 			),
@@ -695,6 +696,66 @@ func skeletonSection() Node {
 							P(Class("text-sm text-muted-foreground"), Text("sofia@example.com")),
 						),
 					),
+				),
+			),
+		),
+	)
+}
+
+func switchSection() Node {
+	return sectionWithSource("Switch", "switch.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("A control that allows the user to toggle between on and off."),
+		),
+
+		subsection("Default",
+			Div(
+				Class("flex items-center space-x-2"),
+				ui.Switch(ui.SwitchProps{}, ID("airplane-mode")),
+				ui.Label(ui.LabelProps{}, For("airplane-mode"), Text("Airplane Mode")),
+			),
+		),
+
+		subsection("Checked",
+			Div(
+				Class("flex items-center space-x-2"),
+				ui.Switch(ui.SwitchProps{}, ID("wifi"), Checked()),
+				ui.Label(ui.LabelProps{}, For("wifi"), Text("Wi-Fi")),
+			),
+		),
+
+		subsection("Disabled",
+			Div(
+				Class("flex flex-col gap-4"),
+				Div(
+					Class("flex items-center space-x-2"),
+					ui.Switch(ui.SwitchProps{}, ID("disabled-off"), Disabled()),
+					ui.Label(ui.LabelProps{}, For("disabled-off"), Text("Disabled (off)")),
+				),
+				Div(
+					Class("flex items-center space-x-2"),
+					ui.Switch(ui.SwitchProps{}, ID("disabled-on"), Disabled(), Checked()),
+					ui.Label(ui.LabelProps{}, For("disabled-on"), Text("Disabled (on)")),
+				),
+			),
+		),
+
+		subsection("Interactive",
+			Div(
+				data.Signals(map[string]any{"enabled": false}),
+				Class("flex flex-col gap-4"),
+				Div(
+					Class("flex items-center space-x-2"),
+					ui.Switch(ui.SwitchProps{},
+						ID("interactive-switch"),
+						data.Bind("enabled"),
+					),
+					ui.Label(ui.LabelProps{}, For("interactive-switch"), Text("Enable notifications")),
+				),
+				Span(
+					Class("text-sm text-muted-foreground"),
+					data.Text("$enabled ? 'Notifications enabled' : 'Notifications disabled'"),
 				),
 			),
 		),
