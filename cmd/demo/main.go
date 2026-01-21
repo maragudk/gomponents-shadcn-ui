@@ -76,6 +76,7 @@ func page() Node {
 				popoverSection(),
 				progressSection(),
 				radioGroupSection(),
+				resizableSection(),
 				scrollAreaSection(),
 				selectSection(),
 				separatorSection(),
@@ -1350,6 +1351,53 @@ func radioGroupSection() Node {
 					Class("flex items-center space-x-2"),
 					ui.RadioGroupItem(ui.RadioGroupItemProps{}, ID("disabled-one"), Name("disabled"), Value("1"), Disabled()),
 					ui.Label(ui.LabelProps{}, For("disabled-one"), Text("Disabled option")),
+				),
+			),
+		),
+	)
+}
+
+func resizableSection() Node {
+	return sectionWithSource("Resizable", "resizable.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Accessible resizable panel groups and layouts with keyboard support."),
+		),
+
+		subsection("Horizontal",
+			ui.ResizablePanelGroup(ui.ResizablePanelGroupProps{},
+				Class("min-h-[200px] max-w-md rounded-lg border"),
+				ui.ResizablePanel(ui.ResizablePanelProps{DefaultSize: 50},
+					Div(
+						Class("flex h-full items-center justify-center p-6"),
+						Span(Class("font-semibold"), Text("One")),
+					),
+				),
+				ui.ResizableHandle(ui.ResizableHandleProps{WithHandle: true}),
+				ui.ResizablePanel(ui.ResizablePanelProps{DefaultSize: 50},
+					Div(
+						Class("flex h-full items-center justify-center p-6"),
+						Span(Class("font-semibold"), Text("Two")),
+					),
+				),
+			),
+		),
+
+		subsection("Vertical",
+			ui.ResizablePanelGroup(ui.ResizablePanelGroupProps{Direction: ui.ResizableDirectionVertical},
+				Class("min-h-[200px] max-w-md rounded-lg border"),
+				ui.ResizablePanel(ui.ResizablePanelProps{DefaultSize: 25},
+					Div(
+						Class("flex h-full items-center justify-center p-6"),
+						Span(Class("font-semibold"), Text("Header")),
+					),
+				),
+				ui.ResizableHandle(ui.ResizableHandleProps{WithHandle: true}),
+				ui.ResizablePanel(ui.ResizablePanelProps{DefaultSize: 75},
+					Div(
+						Class("flex h-full items-center justify-center p-6"),
+						Span(Class("font-semibold"), Text("Content")),
+					),
 				),
 			),
 		),
