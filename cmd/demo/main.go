@@ -56,6 +56,7 @@ func page() g.Node {
 				checkboxSection(),
 				inputSection(),
 				labelSection(),
+				progressSection(),
 				separatorSection(),
 				skeletonSection(),
 				textareaSection(),
@@ -340,6 +341,33 @@ func labelSection() g.Node {
 				h.Class("flex flex-col gap-2"),
 				ui.Label(ui.LabelProps{}, h.For("email"), g.Text("Email")),
 				ui.Input(ui.InputProps{}, h.Type("email"), h.ID("email"), h.Placeholder("Enter your email"), h.Class("max-w-sm")),
+			),
+		),
+	)
+}
+
+func progressSection() g.Node {
+	return section("Progress",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Displays an indicator showing the completion progress of a task."),
+		),
+
+		subsection("Default",
+			h.Div(
+				h.Class("w-60"),
+				ui.Progress(ui.ProgressProps{Value: 33}),
+			),
+		),
+
+		subsection("Different Values",
+			h.Div(
+				h.Class("flex flex-col gap-4 w-60"),
+				ui.Progress(ui.ProgressProps{Value: 0}),
+				ui.Progress(ui.ProgressProps{Value: 25}),
+				ui.Progress(ui.ProgressProps{Value: 50}),
+				ui.Progress(ui.ProgressProps{Value: 75}),
+				ui.Progress(ui.ProgressProps{Value: 100}),
 			),
 		),
 	)
