@@ -51,6 +51,7 @@ func page() g.Node {
 				avatarSection(),
 				badgeSection(),
 				buttonSection(),
+				cardSection(),
 				labelSection(),
 			),
 		},
@@ -186,6 +187,45 @@ func buttonSection() g.Node {
 				ui.Button(ui.ButtonProps{}, h.Disabled(), g.Text("Disabled")),
 				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantSecondary}, h.Disabled(), g.Text("Disabled")),
 				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline}, h.Disabled(), g.Text("Disabled")),
+			),
+		),
+	)
+}
+
+func cardSection() g.Node {
+	return section("Card",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Displays a card with header, content, and footer."),
+		),
+
+		subsection("Default",
+			ui.Card(ui.CardProps{}, h.Class("w-96"),
+				ui.CardHeader(ui.CardHeaderProps{},
+					ui.CardTitle(ui.CardTitleProps{}, g.Text("Card Title")),
+					ui.CardDescription(ui.CardDescriptionProps{}, g.Text("Card description goes here.")),
+				),
+				ui.CardContent(ui.CardContentProps{},
+					h.P(g.Text("Card content goes here. You can put any content inside.")),
+				),
+				ui.CardFooter(ui.CardFooterProps{},
+					ui.Button(ui.ButtonProps{}, g.Text("Action")),
+				),
+			),
+		),
+
+		subsection("With Action",
+			ui.Card(ui.CardProps{}, h.Class("w-96"),
+				ui.CardHeader(ui.CardHeaderProps{},
+					ui.CardTitle(ui.CardTitleProps{}, g.Text("Notifications")),
+					ui.CardDescription(ui.CardDescriptionProps{}, g.Text("You have 3 unread messages.")),
+					ui.CardAction(ui.CardActionProps{},
+						ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeSm}, g.Text("Mark all read")),
+					),
+				),
+				ui.CardContent(ui.CardContentProps{},
+					h.P(g.Text("Your notifications will appear here.")),
+				),
 			),
 		),
 	)
