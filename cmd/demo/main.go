@@ -54,6 +54,7 @@ func page() g.Node {
 				cardSection(),
 				labelSection(),
 				separatorSection(),
+				skeletonSection(),
 			),
 		},
 	})
@@ -277,6 +278,39 @@ func separatorSection() g.Node {
 					h.Div(g.Text("Docs")),
 					ui.Separator(ui.SeparatorProps{Orientation: ui.SeparatorOrientationVertical}),
 					h.Div(g.Text("Source")),
+				),
+			),
+		),
+	)
+}
+
+func skeletonSection() g.Node {
+	return section("Skeleton",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Use to show a placeholder while content is loading."),
+		),
+
+		subsection("Default",
+			h.Div(
+				h.Class("flex items-center space-x-4"),
+				ui.Skeleton(ui.SkeletonProps{}, h.Class("h-12 w-12 rounded-full")),
+				h.Div(
+					h.Class("space-y-2"),
+					ui.Skeleton(ui.SkeletonProps{}, h.Class("h-4 w-[250px]")),
+					ui.Skeleton(ui.SkeletonProps{}, h.Class("h-4 w-[200px]")),
+				),
+			),
+		),
+
+		subsection("Card",
+			h.Div(
+				h.Class("flex flex-col space-y-3"),
+				ui.Skeleton(ui.SkeletonProps{}, h.Class("h-[125px] w-[250px] rounded-xl")),
+				h.Div(
+					h.Class("space-y-2"),
+					ui.Skeleton(ui.SkeletonProps{}, h.Class("h-4 w-[250px]")),
+					ui.Skeleton(ui.SkeletonProps{}, h.Class("h-4 w-[200px]")),
 				),
 			),
 		),
