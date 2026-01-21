@@ -67,6 +67,7 @@ func page() Node {
 				switchSection(),
 				tableSection(),
 				textareaSection(),
+				toggleSection(),
 			),
 		},
 	})
@@ -832,6 +833,66 @@ func textareaSection() Node {
 
 		subsection("Disabled",
 			ui.Textarea(ui.TextareaProps{}, Class("max-w-sm"), Disabled(), Placeholder("Disabled")),
+		),
+	)
+}
+
+func toggleSection() Node {
+	return sectionWithSource("Toggle", "toggle.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("A two-state button that can be either on or off."),
+		),
+
+		subsection("Default",
+			ui.Toggle(ui.ToggleProps{},
+				Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>`),
+			),
+		),
+
+		subsection("Outline",
+			ui.Toggle(ui.ToggleProps{Variant: ui.ToggleVariantOutline},
+				Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>`),
+			),
+		),
+
+		subsection("With Text",
+			ui.Toggle(ui.ToggleProps{},
+				Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></svg>`),
+				Text("Toggle Italic"),
+			),
+		),
+
+		subsection("Sizes",
+			Div(
+				Class("flex items-center gap-4"),
+				ui.Toggle(ui.ToggleProps{Size: ui.ToggleSizeSm},
+					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>`),
+				),
+				ui.Toggle(ui.ToggleProps{Size: ui.ToggleSizeDefault},
+					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>`),
+				),
+				ui.Toggle(ui.ToggleProps{Size: ui.ToggleSizeLg},
+					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>`),
+				),
+			),
+		),
+
+		subsection("Interactive",
+			Div(
+				data.Signals(map[string]any{"bold": false}),
+				Class("flex flex-col gap-4"),
+				Div(
+					data.Attr("data-state", "$bold ? 'on' : 'off'"),
+					data.On("click", "$bold = !$bold"),
+					Class("inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium hover:bg-muted hover:text-muted-foreground data-[state=on]:bg-accent data-[state=on]:text-accent-foreground outline-none cursor-pointer bg-transparent h-9 px-2 min-w-9"),
+					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>`),
+				),
+				Span(
+					Class("text-sm text-muted-foreground"),
+					data.Text("$bold ? 'Bold is on' : 'Bold is off'"),
+				),
+			),
 		),
 	)
 }
