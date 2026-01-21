@@ -1,4 +1,6 @@
 maragu.dev/gomponents v1.2.1-0.20260121103336-601c7928cf19 h1:xNLwK4JiNw9hm0f6l7LhNyiIXqqWJuEZZZjHi1ngOdc=
 maragu.dev/gomponents v1.2.1-0.20260121103336-601c7928cf19/go.mod h1:oEDahza2gZoXDoDHhw8jBNgH+3UR5ni7Ur648HORydM=
+maragu.dev/gomponents-datastar v0.3.3 h1:vGPoEy61xbdBgndfOsde0ILHhw8hL1nwgzNNYScxRFU=
+maragu.dev/gomponents-datastar v0.3.3/go.mod h1:cx6Bx+DRz9nAEfrSW1yLZAI1mcM/uvXmJCbe3a66J/I=
 maragu.dev/is v0.3.1 h1:1sj4Ewc9Ecqtvp1Aro+kRCpnuu4D5CB8w//GOfM7jFs=
 maragu.dev/is v0.3.1/go.mod h1:bviaM5S0fBshCw7wuumFGTju/izopZ/Yvq4g7Klc7y8=
