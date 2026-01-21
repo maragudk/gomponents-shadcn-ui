@@ -58,6 +58,7 @@ func page() Node {
 				buttonSection(),
 				cardSection(),
 				checkboxSection(),
+				collapsibleSection(),
 				inputSection(),
 				labelSection(),
 				paginationSection(),
@@ -448,6 +449,46 @@ func checkboxSection() Node {
 				Span(
 					Class("text-sm text-muted-foreground"),
 					data.Text("$checked ? 'You have agreed!' : 'Please check the box'"),
+				),
+			),
+		),
+	)
+}
+
+func collapsibleSection() Node {
+	return sectionWithSource("Collapsible", "collapsible.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("An interactive component which expands/collapses content."),
+		),
+
+		subsection("Default",
+			Div(
+				data.Signals(map[string]any{"open": false}),
+				Class("w-[350px] space-y-2"),
+				Div(
+					Class("flex items-center justify-between space-x-4 px-4"),
+					H4(Class("text-sm font-semibold"), Text("@peduarte starred 3 repositories")),
+					ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantGhost, Size: ui.ButtonSizeIcon},
+						data.On("click", "$open = !$open"),
+						Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="14" y="3" rx="1"/><path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"/></svg>`),
+					),
+				),
+				Div(
+					Class("rounded-md border px-4 py-2 font-mono text-sm shadow-sm"),
+					Text("@radix-ui/primitives"),
+				),
+				Div(
+					data.Show("$open"),
+					Class("space-y-2"),
+					Div(
+						Class("rounded-md border px-4 py-2 font-mono text-sm shadow-sm"),
+						Text("@radix-ui/colors"),
+					),
+					Div(
+						Class("rounded-md border px-4 py-2 font-mono text-sm shadow-sm"),
+						Text("@stitches/react"),
+					),
 				),
 			),
 		),
