@@ -1,11 +1,12 @@
 package ui
 
 import (
-	g "maragu.dev/gomponents"
+	. "maragu.dev/gomponents"
+	. "maragu.dev/gomponents/components"
 	h "maragu.dev/gomponents/html"
 )
 
-// ButtonVariant defines the visual style of a button.
+// ButtonVariant defines the visual style of a [Button].
 type ButtonVariant string
 
 const (
@@ -17,7 +18,7 @@ const (
 	ButtonVariantLink        ButtonVariant = "link"
 )
 
-// ButtonSize defines the size of a button.
+// ButtonSize defines the size of a [Button].
 type ButtonSize string
 
 const (
@@ -27,27 +28,31 @@ const (
 	ButtonSizeIcon    ButtonSize = "icon"
 )
 
-// ButtonProps configures a Button component.
+// ButtonProps for [Button] and [ButtonA].
 type ButtonProps struct {
 	Variant ButtonVariant
 	Size    ButtonSize
-	Class   string
 }
 
 // Button renders a button element with shadcn/ui styling.
-// Pass additional attributes and children as needed.
-func Button(props ButtonProps, children ...g.Node) g.Node {
+// Pass additional attributes (like [h.Type], [h.Disabled], [h.Class]) and children as needed.
+func Button(props ButtonProps, children ...Node) Node {
 	return h.Button(
-		h.Class(buttonClasses(props)),
-		g.Group(children),
+		JoinAttrs("class",
+			h.Class(buttonClasses(props)),
+			Group(children),
+		),
 	)
 }
 
 // ButtonA renders an anchor element styled as a button.
-func ButtonA(props ButtonProps, children ...g.Node) g.Node {
+// Pass additional attributes (like [h.Href], [h.Class]) and children as needed.
+func ButtonA(props ButtonProps, children ...Node) Node {
 	return h.A(
-		h.Class(buttonClasses(props)),
-		g.Group(children),
+		JoinAttrs("class",
+			h.Class(buttonClasses(props)),
+			Group(children),
+		),
 	)
 }
 
@@ -62,8 +67,6 @@ func buttonClasses(props ButtonProps) string {
 		size = ButtonSizeDefault
 	}
 
-	base := "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
-
 	variantClass, ok := buttonVariantClasses[variant]
 	if !ok {
 		panic("ui: invalid ButtonVariant: " + string(variant))
@@ -74,14 +77,10 @@ func buttonClasses(props ButtonProps) string {
 		panic("ui: invalid ButtonSize: " + string(size))
 	}
 
-	classes := base + " " + variantClass + " " + sizeClass
-
-	if props.Class != "" {
-		classes += " " + props.Class
-	}
-
-	return classes
+	return buttonBaseClass + " " + variantClass + " " + sizeClass
 }
+
+const buttonBaseClass = "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
 
 var buttonVariantClasses = map[ButtonVariant]string{
 	ButtonVariantDefault:     "bg-primary text-primary-foreground shadow hover:bg-primary/90",
