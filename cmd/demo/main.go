@@ -4,10 +4,10 @@ package main
 import (
 	"os"
 
-	g "maragu.dev/gomponents"
-	c "maragu.dev/gomponents/components"
+	. "maragu.dev/gomponents"
+	. "maragu.dev/gomponents/components"
 	data "maragu.dev/gomponents-datastar"
-	h "maragu.dev/gomponents/html"
+	. "maragu.dev/gomponents/html"
 
 	ui "maragu.dev/gomponents-shadcn-ui"
 )
@@ -36,19 +36,19 @@ func run() error {
 	return f.Close()
 }
 
-func page() g.Node {
-	return c.HTML5(c.HTML5Props{
+func page() Node {
+	return HTML5(HTML5Props{
 		Title:       "gomponents-shadcn-ui Demo",
 		Description: "A demo of all gomponents-shadcn-ui components",
 		Language:    "en",
-		Head: []g.Node{
-			h.Link(h.Rel("stylesheet"), h.Href("styles.css")),
-			h.Script(h.Type("module"), h.Src("https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.0-RC.7/bundles/datastar.js")),
+		Head: []Node{
+			Link(Rel("stylesheet"), Href("styles.css")),
+			Script(Type("module"), Src("https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.0-RC.7/bundles/datastar.js")),
 		},
-		Body: []g.Node{
-			h.Class("bg-background text-foreground min-h-screen"),
-			h.Div(
-				h.Class("container mx-auto py-12 px-4 max-w-4xl"),
+		Body: []Node{
+			Class("bg-background text-foreground min-h-screen"),
+			Div(
+				Class("container mx-auto py-12 px-4 max-w-4xl"),
 				header(),
 				alertSection(),
 				aspectRatioSection(),
@@ -72,166 +72,179 @@ func page() g.Node {
 	})
 }
 
-func header() g.Node {
-	return h.Header(
-		h.Class("mb-12"),
-		h.H1(
-			h.Class("text-4xl font-bold mb-4"),
-			g.Text("gomponents-shadcn-ui"),
+func header() Node {
+	return Header(
+		Class("mb-12"),
+		H1(
+			Class("text-4xl font-bold mb-4"),
+			Text("gomponents-shadcn-ui"),
 		),
-		h.P(
-			h.Class("text-muted-foreground text-lg"),
-			g.Text("shadcn/ui components for Go, built with "),
-			h.A(
-				h.Href("https://www.gomponents.com"),
-				h.Class("underline hover:text-foreground"),
-				g.Text("gomponents"),
+		P(
+			Class("text-muted-foreground text-lg mb-4"),
+			A(
+				Href("https://ui.shadcn.com"),
+				Class("underline hover:text-foreground"),
+				Text("shadcn/ui"),
 			),
-			g.Text("."),
+			Text(" components for Go, built with "),
+			A(
+				Href("https://www.gomponents.com"),
+				Class("underline hover:text-foreground"),
+				Text("gomponents"),
+			),
+			Text("."),
+		),
+		P(
+			Class("text-muted-foreground"),
+			A(
+				Href("https://github.com/maragudk/gomponents-shadcn-ui"),
+				Class("underline hover:text-foreground"),
+				Text("View on GitHub"),
+			),
 		),
 	)
 }
 
-func alertSection() g.Node {
-	return section("Alert",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Displays a callout for user attention."),
+func alertSection() Node {
+	return sectionWithSource("Alert", "alert.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Displays a callout for user attention."),
 		),
 
 		subsection("Default",
 			ui.Alert(ui.AlertProps{},
-				g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`),
-				ui.AlertTitle(ui.AlertTitleProps{}, g.Text("Heads up!")),
-				ui.AlertDescription(ui.AlertDescriptionProps{}, g.Text("You can add components to your app using the cli.")),
+				Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`),
+				ui.AlertTitle(ui.AlertTitleProps{}, Text("Heads up!")),
+				ui.AlertDescription(ui.AlertDescriptionProps{}, Text("You can add components to your app using the cli.")),
 			),
 		),
 
 		subsection("Destructive",
 			ui.Alert(ui.AlertProps{Variant: ui.AlertVariantDestructive},
-				g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>`),
-				ui.AlertTitle(ui.AlertTitleProps{}, g.Text("Error")),
-				ui.AlertDescription(ui.AlertDescriptionProps{}, g.Text("Your session has expired. Please log in again.")),
+				Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>`),
+				ui.AlertTitle(ui.AlertTitleProps{}, Text("Error")),
+				ui.AlertDescription(ui.AlertDescriptionProps{}, Text("Your session has expired. Please log in again.")),
 			),
 		),
 	)
 }
 
-func aspectRatioSection() g.Node {
-	return section("Aspect Ratio",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Displays content within a desired ratio."),
+func aspectRatioSection() Node {
+	return sectionWithSource("Aspect Ratio", "aspectratio.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Displays content within a desired ratio."),
 		),
 
 		subsection("16:9",
-			h.Div(
-				h.Class("w-[450px]"),
+			Div(
+				Class("w-[450px]"),
 				ui.AspectRatio(ui.AspectRatioProps{Ratio: 16.0 / 9.0},
-					h.Img(
-						h.Src("https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"),
-						h.Alt("Photo by Drew Beamer"),
-						h.Class("rounded-md object-cover"),
+					Img(
+						Src("https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"),
+						Alt("Photo by Drew Beamer"),
+						Class("rounded-md object-cover"),
 					),
 				),
 			),
 		),
 
 		subsection("Square",
-			h.Div(
-				h.Class("w-[200px]"),
+			Div(
+				Class("w-[200px]"),
 				ui.AspectRatio(ui.AspectRatioProps{Ratio: 1},
-					h.Div(h.Class("bg-muted flex items-center justify-center rounded-md"), g.Text("1:1")),
+					Div(Class("bg-muted flex items-center justify-center rounded-md"), Text("1:1")),
 				),
 			),
 		),
 	)
 }
 
-func avatarSection() g.Node {
-	return section("Avatar",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("An image element with a fallback for representing the user."),
+func avatarSection() Node {
+	return sectionWithSource("Avatar", "avatar.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("An image element with a fallback for representing the user."),
 		),
 
 		subsection("With Image",
-			h.Div(
-				h.Class("flex flex-wrap gap-4"),
+			Div(
+				Class("flex flex-wrap gap-4"),
 				ui.Avatar(ui.AvatarProps{},
-					ui.AvatarImage(ui.AvatarImageProps{}, h.Src("https://github.com/shadcn.png"), h.Alt("@shadcn")),
+					ui.AvatarImage(ui.AvatarImageProps{}, Src("https://github.com/shadcn.png"), Alt("@shadcn")),
 				),
 			),
 		),
 
 		subsection("With Fallback",
-			h.Div(
-				h.Class("flex flex-wrap gap-4"),
+			Div(
+				Class("flex flex-wrap gap-4"),
 				ui.Avatar(ui.AvatarProps{},
-					ui.AvatarFallback(ui.AvatarFallbackProps{}, g.Text("CN")),
+					ui.AvatarFallback(ui.AvatarFallbackProps{}, Text("CN")),
 				),
 			),
 		),
 
 		subsection("Sizes",
-			h.Div(
-				h.Class("flex flex-wrap items-center gap-4"),
-				ui.Avatar(ui.AvatarProps{}, h.Class("size-6"),
-					ui.AvatarFallback(ui.AvatarFallbackProps{}, h.Class("text-xs"), g.Text("XS")),
+			Div(
+				Class("flex flex-wrap items-center gap-4"),
+				ui.Avatar(ui.AvatarProps{}, Class("size-6"),
+					ui.AvatarFallback(ui.AvatarFallbackProps{}, Class("text-xs"), Text("XS")),
 				),
 				ui.Avatar(ui.AvatarProps{},
-					ui.AvatarFallback(ui.AvatarFallbackProps{}, g.Text("SM")),
+					ui.AvatarFallback(ui.AvatarFallbackProps{}, Text("SM")),
 				),
-				ui.Avatar(ui.AvatarProps{}, h.Class("size-12"),
-					ui.AvatarFallback(ui.AvatarFallbackProps{}, g.Text("MD")),
+				ui.Avatar(ui.AvatarProps{}, Class("size-12"),
+					ui.AvatarFallback(ui.AvatarFallbackProps{}, Text("MD")),
 				),
-				ui.Avatar(ui.AvatarProps{}, h.Class("size-16"),
-					ui.AvatarFallback(ui.AvatarFallbackProps{}, h.Class("text-lg"), g.Text("LG")),
+				ui.Avatar(ui.AvatarProps{}, Class("size-16"),
+					ui.AvatarFallback(ui.AvatarFallbackProps{}, Class("text-lg"), Text("LG")),
 				),
 			),
 		),
 	)
 }
 
-func badgeSection() g.Node {
-	return section("Badge",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Displays a badge or a component that looks like a badge."),
+func badgeSection() Node {
+	return sectionWithSource("Badge", "badge.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Displays a badge or a component that looks like a badge."),
 		),
 
 		subsection("Variants",
-			h.Div(
-				h.Class("flex flex-wrap gap-4"),
-				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantDefault}, g.Text("Default")),
-				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantSecondary}, g.Text("Secondary")),
-				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantDestructive}, g.Text("Destructive")),
-				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantOutline}, g.Text("Outline")),
+			Div(
+				Class("flex flex-wrap gap-4"),
+				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantDefault}, Text("Default")),
+				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantSecondary}, Text("Secondary")),
+				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantDestructive}, Text("Destructive")),
+				ui.Badge(ui.BadgeProps{Variant: ui.BadgeVariantOutline}, Text("Outline")),
 			),
 		),
 	)
 }
 
-func breadcrumbSection() g.Node {
-	return section("Breadcrumb",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Displays the path to the current resource using a hierarchy of links."),
+func breadcrumbSection() Node {
+	return sectionWithSource("Breadcrumb", "breadcrumb.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Displays the path to the current resource using a hierarchy of links."),
 		),
 
 		subsection("Default",
 			ui.Breadcrumb(ui.BreadcrumbProps{},
 				ui.BreadcrumbList(ui.BreadcrumbListProps{},
 					ui.BreadcrumbItem(ui.BreadcrumbItemProps{},
-						ui.BreadcrumbLink(ui.BreadcrumbLinkProps{}, h.Href("#"), g.Text("Home")),
+						ui.BreadcrumbLink(ui.BreadcrumbLinkProps{}, Href("#"), Text("Home")),
 					),
 					ui.BreadcrumbSeparator(ui.BreadcrumbSeparatorProps{}),
 					ui.BreadcrumbItem(ui.BreadcrumbItemProps{},
-						ui.BreadcrumbLink(ui.BreadcrumbLinkProps{}, h.Href("#"), g.Text("Components")),
+						ui.BreadcrumbLink(ui.BreadcrumbLinkProps{}, Href("#"), Text("Components")),
 					),
 					ui.BreadcrumbSeparator(ui.BreadcrumbSeparatorProps{}),
 					ui.BreadcrumbItem(ui.BreadcrumbItemProps{},
-						ui.BreadcrumbPage(ui.BreadcrumbPageProps{}, g.Text("Breadcrumb")),
+						ui.BreadcrumbPage(ui.BreadcrumbPageProps{}, Text("Breadcrumb")),
 					),
 				),
 			),
@@ -241,7 +254,7 @@ func breadcrumbSection() g.Node {
 			ui.Breadcrumb(ui.BreadcrumbProps{},
 				ui.BreadcrumbList(ui.BreadcrumbListProps{},
 					ui.BreadcrumbItem(ui.BreadcrumbItemProps{},
-						ui.BreadcrumbLink(ui.BreadcrumbLinkProps{}, h.Href("#"), g.Text("Home")),
+						ui.BreadcrumbLink(ui.BreadcrumbLinkProps{}, Href("#"), Text("Home")),
 					),
 					ui.BreadcrumbSeparator(ui.BreadcrumbSeparatorProps{}),
 					ui.BreadcrumbItem(ui.BreadcrumbItemProps{},
@@ -249,11 +262,11 @@ func breadcrumbSection() g.Node {
 					),
 					ui.BreadcrumbSeparator(ui.BreadcrumbSeparatorProps{}),
 					ui.BreadcrumbItem(ui.BreadcrumbItemProps{},
-						ui.BreadcrumbLink(ui.BreadcrumbLinkProps{}, h.Href("#"), g.Text("Components")),
+						ui.BreadcrumbLink(ui.BreadcrumbLinkProps{}, Href("#"), Text("Components")),
 					),
 					ui.BreadcrumbSeparator(ui.BreadcrumbSeparatorProps{}),
 					ui.BreadcrumbItem(ui.BreadcrumbItemProps{},
-						ui.BreadcrumbPage(ui.BreadcrumbPageProps{}, g.Text("Breadcrumb")),
+						ui.BreadcrumbPage(ui.BreadcrumbPageProps{}, Text("Breadcrumb")),
 					),
 				),
 			),
@@ -261,205 +274,205 @@ func breadcrumbSection() g.Node {
 	)
 }
 
-func buttonSection() g.Node {
-	return section("Button",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Displays a button or a component that looks like a button."),
+func buttonSection() Node {
+	return sectionWithSource("Button", "button.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Displays a button or a component that looks like a button."),
 		),
 
 		subsection("Variants",
-			h.Div(
-				h.Class("flex flex-wrap gap-4"),
-				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantDefault}, g.Text("Default")),
-				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantSecondary}, g.Text("Secondary")),
-				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantDestructive}, g.Text("Destructive")),
-				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline}, g.Text("Outline")),
-				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantGhost}, g.Text("Ghost")),
-				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantLink}, g.Text("Link")),
+			Div(
+				Class("flex flex-wrap gap-4"),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantDefault}, Text("Default")),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantSecondary}, Text("Secondary")),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantDestructive}, Text("Destructive")),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline}, Text("Outline")),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantGhost}, Text("Ghost")),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantLink}, Text("Link")),
 			),
 		),
 
 		subsection("Sizes",
-			h.Div(
-				h.Class("flex flex-wrap items-center gap-4"),
-				ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm}, g.Text("Small")),
-				ui.Button(ui.ButtonProps{Size: ui.ButtonSizeDefault}, g.Text("Default")),
-				ui.Button(ui.ButtonProps{Size: ui.ButtonSizeLg}, g.Text("Large")),
+			Div(
+				Class("flex flex-wrap items-center gap-4"),
+				ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm}, Text("Small")),
+				ui.Button(ui.ButtonProps{Size: ui.ButtonSizeDefault}, Text("Default")),
+				ui.Button(ui.ButtonProps{Size: ui.ButtonSizeLg}, Text("Large")),
 				ui.Button(ui.ButtonProps{Size: ui.ButtonSizeIcon},
-					g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`),
+					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`),
 				),
 			),
 		),
 
 		subsection("As Link",
-			h.Div(
-				h.Class("flex flex-wrap gap-4"),
-				ui.ButtonA(ui.ButtonProps{}, h.Href("#"), g.Text("Link Button")),
-				ui.ButtonA(ui.ButtonProps{Variant: ui.ButtonVariantOutline}, h.Href("#"), g.Text("Outline Link")),
+			Div(
+				Class("flex flex-wrap gap-4"),
+				ui.ButtonA(ui.ButtonProps{}, Href("#"), Text("Link Button")),
+				ui.ButtonA(ui.ButtonProps{Variant: ui.ButtonVariantOutline}, Href("#"), Text("Outline Link")),
 			),
 		),
 
 		subsection("Disabled",
-			h.Div(
-				h.Class("flex flex-wrap gap-4"),
-				ui.Button(ui.ButtonProps{}, h.Disabled(), g.Text("Disabled")),
-				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantSecondary}, h.Disabled(), g.Text("Disabled")),
-				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline}, h.Disabled(), g.Text("Disabled")),
+			Div(
+				Class("flex flex-wrap gap-4"),
+				ui.Button(ui.ButtonProps{}, Disabled(), Text("Disabled")),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantSecondary}, Disabled(), Text("Disabled")),
+				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline}, Disabled(), Text("Disabled")),
 			),
 		),
 	)
 }
 
-func cardSection() g.Node {
-	return section("Card",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Displays a card with header, content, and footer."),
+func cardSection() Node {
+	return sectionWithSource("Card", "card.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Displays a card with header, content, and footer."),
 		),
 
 		subsection("Default",
-			ui.Card(ui.CardProps{}, h.Class("w-96"),
+			ui.Card(ui.CardProps{}, Class("w-96"),
 				ui.CardHeader(ui.CardHeaderProps{},
-					ui.CardTitle(ui.CardTitleProps{}, g.Text("Card Title")),
-					ui.CardDescription(ui.CardDescriptionProps{}, g.Text("Card description goes here.")),
+					ui.CardTitle(ui.CardTitleProps{}, Text("Card Title")),
+					ui.CardDescription(ui.CardDescriptionProps{}, Text("Card description goes here.")),
 				),
 				ui.CardContent(ui.CardContentProps{},
-					h.P(g.Text("Card content goes here. You can put any content inside.")),
+					P(Text("Card content goes here. You can put any content inside.")),
 				),
 				ui.CardFooter(ui.CardFooterProps{},
-					ui.Button(ui.ButtonProps{}, g.Text("Action")),
+					ui.Button(ui.ButtonProps{}, Text("Action")),
 				),
 			),
 		),
 
 		subsection("With Action",
-			ui.Card(ui.CardProps{}, h.Class("w-96"),
+			ui.Card(ui.CardProps{}, Class("w-96"),
 				ui.CardHeader(ui.CardHeaderProps{},
-					ui.CardTitle(ui.CardTitleProps{}, g.Text("Notifications")),
-					ui.CardDescription(ui.CardDescriptionProps{}, g.Text("You have 3 unread messages.")),
+					ui.CardTitle(ui.CardTitleProps{}, Text("Notifications")),
+					ui.CardDescription(ui.CardDescriptionProps{}, Text("You have 3 unread messages.")),
 					ui.CardAction(ui.CardActionProps{},
-						ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeSm}, g.Text("Mark all read")),
+						ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeSm}, Text("Mark all read")),
 					),
 				),
 				ui.CardContent(ui.CardContentProps{},
-					h.P(g.Text("Your notifications will appear here.")),
+					P(Text("Your notifications will appear here.")),
 				),
 			),
 		),
 	)
 }
 
-func checkboxSection() g.Node {
-	return section("Checkbox",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("A control that allows the user to toggle between checked and not checked."),
+func checkboxSection() Node {
+	return sectionWithSource("Checkbox", "checkbox.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("A control that allows the user to toggle between checked and not checked."),
 		),
 
 		subsection("Default",
-			h.Div(
-				h.Class("flex items-center space-x-2"),
-				ui.Checkbox(ui.CheckboxProps{}, h.ID("terms")),
-				ui.Label(ui.LabelProps{}, h.For("terms"), g.Text("Accept terms and conditions")),
+			Div(
+				Class("flex items-center space-x-2"),
+				ui.Checkbox(ui.CheckboxProps{}, ID("terms")),
+				ui.Label(ui.LabelProps{}, For("terms"), Text("Accept terms and conditions")),
 			),
 		),
 
 		subsection("Checked",
-			h.Div(
-				h.Class("flex items-center space-x-2"),
-				ui.Checkbox(ui.CheckboxProps{}, h.ID("newsletter"), h.Checked()),
-				ui.Label(ui.LabelProps{}, h.For("newsletter"), g.Text("Subscribe to newsletter")),
+			Div(
+				Class("flex items-center space-x-2"),
+				ui.Checkbox(ui.CheckboxProps{}, ID("newsletter"), Checked()),
+				ui.Label(ui.LabelProps{}, For("newsletter"), Text("Subscribe to newsletter")),
 			),
 		),
 
 		subsection("Disabled",
-			h.Div(
-				h.Class("flex items-center space-x-2"),
-				ui.Checkbox(ui.CheckboxProps{}, h.ID("disabled-checkbox"), h.Disabled()),
-				ui.Label(ui.LabelProps{}, h.For("disabled-checkbox"), g.Text("Disabled")),
+			Div(
+				Class("flex items-center space-x-2"),
+				ui.Checkbox(ui.CheckboxProps{}, ID("disabled-checkbox"), Disabled()),
+				ui.Label(ui.LabelProps{}, For("disabled-checkbox"), Text("Disabled")),
 			),
 		),
 	)
 }
 
-func inputSection() g.Node {
-	return section("Input",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Displays a form input field or a component that looks like an input field."),
+func inputSection() Node {
+	return sectionWithSource("Input", "input.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Displays a form input field or a component that looks like an input field."),
 		),
 
 		subsection("Default",
-			ui.Input(ui.InputProps{}, h.Class("max-w-sm"), h.Placeholder("Email")),
+			ui.Input(ui.InputProps{}, Class("max-w-sm"), Placeholder("Email")),
 		),
 
 		subsection("With Label",
-			h.Div(
-				h.Class("flex flex-col gap-2 max-w-sm"),
-				ui.Label(ui.LabelProps{}, h.For("email-input"), g.Text("Email")),
-				ui.Input(ui.InputProps{}, h.Type("email"), h.ID("email-input"), h.Placeholder("Enter your email")),
+			Div(
+				Class("flex flex-col gap-2 max-w-sm"),
+				ui.Label(ui.LabelProps{}, For("email-input"), Text("Email")),
+				ui.Input(ui.InputProps{}, Type("email"), ID("email-input"), Placeholder("Enter your email")),
 			),
 		),
 
 		subsection("Disabled",
-			ui.Input(ui.InputProps{}, h.Class("max-w-sm"), h.Disabled(), h.Placeholder("Disabled")),
+			ui.Input(ui.InputProps{}, Class("max-w-sm"), Disabled(), Placeholder("Disabled")),
 		),
 
 		subsection("File Input",
-			h.Div(
-				h.Class("flex flex-col gap-2 max-w-sm"),
-				ui.Label(ui.LabelProps{}, h.For("file-input"), g.Text("Picture")),
-				ui.Input(ui.InputProps{}, h.Type("file"), h.ID("file-input")),
+			Div(
+				Class("flex flex-col gap-2 max-w-sm"),
+				ui.Label(ui.LabelProps{}, For("file-input"), Text("Picture")),
+				ui.Input(ui.InputProps{}, Type("file"), ID("file-input")),
 			),
 		),
 	)
 }
 
-func labelSection() g.Node {
-	return section("Label",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Renders an accessible label associated with controls."),
+func labelSection() Node {
+	return sectionWithSource("Label", "label.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Renders an accessible label associated with controls."),
 		),
 
 		subsection("Default",
-			h.Div(
-				h.Class("flex flex-col gap-2"),
-				ui.Label(ui.LabelProps{}, h.For("email"), g.Text("Email")),
-				ui.Input(ui.InputProps{}, h.Type("email"), h.ID("email"), h.Placeholder("Enter your email"), h.Class("max-w-sm")),
+			Div(
+				Class("flex flex-col gap-2"),
+				ui.Label(ui.LabelProps{}, For("email"), Text("Email")),
+				ui.Input(ui.InputProps{}, Type("email"), ID("email"), Placeholder("Enter your email"), Class("max-w-sm")),
 			),
 		),
 	)
 }
 
-func paginationSection() g.Node {
-	return section("Pagination",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Pagination with page navigation, next and previous links."),
+func paginationSection() Node {
+	return sectionWithSource("Pagination", "pagination.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Pagination with page navigation, next and previous links."),
 		),
 
 		subsection("Default",
 			ui.Pagination(ui.PaginationProps{},
 				ui.PaginationContent(ui.PaginationContentProps{},
 					ui.PaginationItem(ui.PaginationItemProps{},
-						ui.PaginationPrevious(ui.PaginationPreviousProps{}, h.Href("#")),
+						ui.PaginationPrevious(ui.PaginationPreviousProps{}, Href("#")),
 					),
 					ui.PaginationItem(ui.PaginationItemProps{},
-						ui.PaginationLink(ui.PaginationLinkProps{}, h.Href("#"), g.Text("1")),
+						ui.PaginationLink(ui.PaginationLinkProps{}, Href("#"), Text("1")),
 					),
 					ui.PaginationItem(ui.PaginationItemProps{},
-						ui.PaginationLink(ui.PaginationLinkProps{IsActive: true}, h.Href("#"), g.Text("2")),
+						ui.PaginationLink(ui.PaginationLinkProps{IsActive: true}, Href("#"), Text("2")),
 					),
 					ui.PaginationItem(ui.PaginationItemProps{},
-						ui.PaginationLink(ui.PaginationLinkProps{}, h.Href("#"), g.Text("3")),
+						ui.PaginationLink(ui.PaginationLinkProps{}, Href("#"), Text("3")),
 					),
 					ui.PaginationItem(ui.PaginationItemProps{},
 						ui.PaginationEllipsis(ui.PaginationEllipsisProps{}),
 					),
 					ui.PaginationItem(ui.PaginationItemProps{},
-						ui.PaginationNext(ui.PaginationNextProps{}, h.Href("#")),
+						ui.PaginationNext(ui.PaginationNextProps{}, Href("#")),
 					),
 				),
 			),
@@ -467,23 +480,23 @@ func paginationSection() g.Node {
 	)
 }
 
-func progressSection() g.Node {
-	return section("Progress",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Displays an indicator showing the completion progress of a task."),
+func progressSection() Node {
+	return sectionWithSource("Progress", "progress.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Displays an indicator showing the completion progress of a task."),
 		),
 
 		subsection("Default",
-			h.Div(
-				h.Class("w-60"),
+			Div(
+				Class("w-60"),
 				ui.Progress(ui.ProgressProps{Value: 33}),
 			),
 		),
 
 		subsection("Different Values",
-			h.Div(
-				h.Class("flex flex-col gap-4 w-60"),
+			Div(
+				Class("flex flex-col gap-4 w-60"),
 				ui.Progress(ui.ProgressProps{Value: 0}),
 				ui.Progress(ui.ProgressProps{Value: 25}),
 				ui.Progress(ui.ProgressProps{Value: 50}),
@@ -494,110 +507,110 @@ func progressSection() g.Node {
 	)
 }
 
-func separatorSection() g.Node {
-	return section("Separator",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Visually or semantically separates content."),
+func separatorSection() Node {
+	return sectionWithSource("Separator", "separator.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Visually or semantically separates content."),
 		),
 
 		subsection("Horizontal",
-			h.Div(
-				h.Class("space-y-4"),
-				h.Div(
-					h.Class("space-y-1"),
-					h.H4(h.Class("text-sm font-medium leading-none"), g.Text("Radix Primitives")),
-					h.P(h.Class("text-sm text-muted-foreground"), g.Text("An open-source UI component library.")),
+			Div(
+				Class("space-y-4"),
+				Div(
+					Class("space-y-1"),
+					H4(Class("text-sm font-medium leading-none"), Text("Radix Primitives")),
+					P(Class("text-sm text-muted-foreground"), Text("An open-source UI component library.")),
 				),
 				ui.Separator(ui.SeparatorProps{}),
-				h.Div(
-					h.Class("flex h-5 items-center space-x-4 text-sm"),
-					h.Div(g.Text("Blog")),
+				Div(
+					Class("flex h-5 items-center space-x-4 text-sm"),
+					Div(Text("Blog")),
 					ui.Separator(ui.SeparatorProps{Orientation: ui.SeparatorOrientationVertical}),
-					h.Div(g.Text("Docs")),
+					Div(Text("Docs")),
 					ui.Separator(ui.SeparatorProps{Orientation: ui.SeparatorOrientationVertical}),
-					h.Div(g.Text("Source")),
+					Div(Text("Source")),
 				),
 			),
 		),
 	)
 }
 
-func skeletonSection() g.Node {
-	return section("Skeleton",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Use to show a placeholder while content is loading."),
+func skeletonSection() Node {
+	return sectionWithSource("Skeleton", "skeleton.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Use to show a placeholder while content is loading."),
 		),
 
 		subsection("Default",
-			h.Div(
-				h.Class("flex items-center space-x-4"),
-				ui.Skeleton(ui.SkeletonProps{}, h.Class("h-12 w-12 rounded-full")),
-				h.Div(
-					h.Class("space-y-2"),
-					ui.Skeleton(ui.SkeletonProps{}, h.Class("h-4 w-[250px]")),
-					ui.Skeleton(ui.SkeletonProps{}, h.Class("h-4 w-[200px]")),
+			Div(
+				Class("flex items-center space-x-4"),
+				ui.Skeleton(ui.SkeletonProps{}, Class("h-12 w-12 rounded-full")),
+				Div(
+					Class("space-y-2"),
+					ui.Skeleton(ui.SkeletonProps{}, Class("h-4 w-[250px]")),
+					ui.Skeleton(ui.SkeletonProps{}, Class("h-4 w-[200px]")),
 				),
 			),
 		),
 
 		subsection("Card",
-			h.Div(
-				h.Class("flex flex-col space-y-3"),
-				ui.Skeleton(ui.SkeletonProps{}, h.Class("h-[125px] w-[250px] rounded-xl")),
-				h.Div(
-					h.Class("space-y-2"),
-					ui.Skeleton(ui.SkeletonProps{}, h.Class("h-4 w-[250px]")),
-					ui.Skeleton(ui.SkeletonProps{}, h.Class("h-4 w-[200px]")),
+			Div(
+				Class("flex flex-col space-y-3"),
+				ui.Skeleton(ui.SkeletonProps{}, Class("h-[125px] w-[250px] rounded-xl")),
+				Div(
+					Class("space-y-2"),
+					ui.Skeleton(ui.SkeletonProps{}, Class("h-4 w-[250px]")),
+					ui.Skeleton(ui.SkeletonProps{}, Class("h-4 w-[200px]")),
 				),
 			),
 		),
 	)
 }
 
-func tableSection() g.Node {
-	return section("Table",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("A responsive table component."),
+func tableSection() Node {
+	return sectionWithSource("Table", "table.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("A responsive table component."),
 		),
 
 		subsection("Default",
 			ui.Table(ui.TableProps{},
-				ui.TableCaption(ui.TableCaptionProps{}, g.Text("A list of your recent invoices.")),
+				ui.TableCaption(ui.TableCaptionProps{}, Text("A list of your recent invoices.")),
 				ui.TableHeader(ui.TableHeaderProps{},
 					ui.TableRow(ui.TableRowProps{},
-						ui.TableHead(ui.TableHeadProps{}, h.Class("w-[100px]"), g.Text("Invoice")),
-						ui.TableHead(ui.TableHeadProps{}, g.Text("Status")),
-						ui.TableHead(ui.TableHeadProps{}, g.Text("Method")),
-						ui.TableHead(ui.TableHeadProps{}, h.Class("text-right"), g.Text("Amount")),
+						ui.TableHead(ui.TableHeadProps{}, Class("w-[100px]"), Text("Invoice")),
+						ui.TableHead(ui.TableHeadProps{}, Text("Status")),
+						ui.TableHead(ui.TableHeadProps{}, Text("Method")),
+						ui.TableHead(ui.TableHeadProps{}, Class("text-right"), Text("Amount")),
 					),
 				),
 				ui.TableBody(ui.TableBodyProps{},
 					ui.TableRow(ui.TableRowProps{},
-						ui.TableCell(ui.TableCellProps{}, h.Class("font-medium"), g.Text("INV001")),
-						ui.TableCell(ui.TableCellProps{}, g.Text("Paid")),
-						ui.TableCell(ui.TableCellProps{}, g.Text("Credit Card")),
-						ui.TableCell(ui.TableCellProps{}, h.Class("text-right"), g.Text("$250.00")),
+						ui.TableCell(ui.TableCellProps{}, Class("font-medium"), Text("INV001")),
+						ui.TableCell(ui.TableCellProps{}, Text("Paid")),
+						ui.TableCell(ui.TableCellProps{}, Text("Credit Card")),
+						ui.TableCell(ui.TableCellProps{}, Class("text-right"), Text("$250.00")),
 					),
 					ui.TableRow(ui.TableRowProps{},
-						ui.TableCell(ui.TableCellProps{}, h.Class("font-medium"), g.Text("INV002")),
-						ui.TableCell(ui.TableCellProps{}, g.Text("Pending")),
-						ui.TableCell(ui.TableCellProps{}, g.Text("PayPal")),
-						ui.TableCell(ui.TableCellProps{}, h.Class("text-right"), g.Text("$150.00")),
+						ui.TableCell(ui.TableCellProps{}, Class("font-medium"), Text("INV002")),
+						ui.TableCell(ui.TableCellProps{}, Text("Pending")),
+						ui.TableCell(ui.TableCellProps{}, Text("PayPal")),
+						ui.TableCell(ui.TableCellProps{}, Class("text-right"), Text("$150.00")),
 					),
 					ui.TableRow(ui.TableRowProps{},
-						ui.TableCell(ui.TableCellProps{}, h.Class("font-medium"), g.Text("INV003")),
-						ui.TableCell(ui.TableCellProps{}, g.Text("Unpaid")),
-						ui.TableCell(ui.TableCellProps{}, g.Text("Bank Transfer")),
-						ui.TableCell(ui.TableCellProps{}, h.Class("text-right"), g.Text("$350.00")),
+						ui.TableCell(ui.TableCellProps{}, Class("font-medium"), Text("INV003")),
+						ui.TableCell(ui.TableCellProps{}, Text("Unpaid")),
+						ui.TableCell(ui.TableCellProps{}, Text("Bank Transfer")),
+						ui.TableCell(ui.TableCellProps{}, Class("text-right"), Text("$350.00")),
 					),
 				),
 				ui.TableFooter(ui.TableFooterProps{},
 					ui.TableRow(ui.TableRowProps{},
-						ui.TableCell(ui.TableCellProps{}, h.ColSpan("3"), g.Text("Total")),
-						ui.TableCell(ui.TableCellProps{}, h.Class("text-right"), g.Text("$750.00")),
+						ui.TableCell(ui.TableCellProps{}, ColSpan("3"), Text("Total")),
+						ui.TableCell(ui.TableCellProps{}, Class("text-right"), Text("$750.00")),
 					),
 				),
 			),
@@ -605,105 +618,105 @@ func tableSection() g.Node {
 	)
 }
 
-func textareaSection() g.Node {
-	return section("Textarea",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Displays a form textarea or a component that looks like a textarea."),
+func textareaSection() Node {
+	return sectionWithSource("Textarea", "textarea.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Displays a form textarea or a component that looks like a textarea."),
 		),
 
 		subsection("Default",
-			ui.Textarea(ui.TextareaProps{}, h.Class("max-w-sm"), h.Placeholder("Type your message here.")),
+			ui.Textarea(ui.TextareaProps{}, Class("max-w-sm"), Placeholder("Type your message here.")),
 		),
 
 		subsection("With Label",
-			h.Div(
-				h.Class("flex flex-col gap-2 max-w-sm"),
-				ui.Label(ui.LabelProps{}, h.For("message"), g.Text("Your message")),
-				ui.Textarea(ui.TextareaProps{}, h.ID("message"), h.Placeholder("Type your message here.")),
+			Div(
+				Class("flex flex-col gap-2 max-w-sm"),
+				ui.Label(ui.LabelProps{}, For("message"), Text("Your message")),
+				ui.Textarea(ui.TextareaProps{}, ID("message"), Placeholder("Type your message here.")),
 			),
 		),
 
 		subsection("Disabled",
-			ui.Textarea(ui.TextareaProps{}, h.Class("max-w-sm"), h.Disabled(), h.Placeholder("Disabled")),
+			ui.Textarea(ui.TextareaProps{}, Class("max-w-sm"), Disabled(), Placeholder("Disabled")),
 		),
 	)
 }
 
-func interactiveSection() g.Node {
+func interactiveSection() Node {
 	return section("Interactive Examples",
-		h.P(
-			h.Class("text-muted-foreground mb-6"),
-			g.Text("Examples using "),
-			h.A(
-				h.Href("https://data-star.dev"),
-				h.Class("underline hover:text-foreground"),
-				g.Text("Datastar"),
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("Examples using "),
+			A(
+				Href("https://data-star.dev"),
+				Class("underline hover:text-foreground"),
+				Text("Datastar"),
 			),
-			g.Text(" for interactivity via "),
-			h.A(
-				h.Href("https://github.com/maragudk/gomponents-datastar"),
-				h.Class("underline hover:text-foreground"),
-				g.Text("gomponents-datastar"),
+			Text(" for interactivity via "),
+			A(
+				Href("https://github.com/maragudk/gomponents-datastar"),
+				Class("underline hover:text-foreground"),
+				Text("gomponents-datastar"),
 			),
-			g.Text("."),
+			Text("."),
 		),
 
 		subsection("Counter",
-			h.Div(
+			Div(
 				data.Signals(map[string]any{"count": 0}),
-				h.Class("flex items-center gap-4"),
+				Class("flex items-center gap-4"),
 				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeIcon},
 					data.On("click", "$count--"),
-					g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>`),
+					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>`),
 				),
-				h.Span(h.Class("text-2xl font-bold w-12 text-center"), data.Text("$count")),
+				Span(Class("text-2xl font-bold w-12 text-center"), data.Text("$count")),
 				ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline, Size: ui.ButtonSizeIcon},
 					data.On("click", "$count++"),
-					g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`),
+					Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`),
 				),
 			),
 		),
 
 		subsection("Toggle Visibility",
-			h.Div(
+			Div(
 				data.Signals(map[string]any{"visible": true}),
-				h.Class("flex flex-col gap-4"),
+				Class("flex flex-col gap-4"),
 				ui.Button(ui.ButtonProps{},
 					data.On("click", "$visible = !$visible"),
 					data.Text("$visible ? 'Hide Alert' : 'Show Alert'"),
 				),
-				h.Div(
+				Div(
 					data.Show("$visible"),
 					ui.Alert(ui.AlertProps{},
-						g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`),
-						ui.AlertTitle(ui.AlertTitleProps{}, g.Text("Toggled Alert")),
-						ui.AlertDescription(ui.AlertDescriptionProps{}, g.Text("This alert can be shown or hidden using Datastar.")),
+						Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`),
+						ui.AlertTitle(ui.AlertTitleProps{}, Text("Toggled Alert")),
+						ui.AlertDescription(ui.AlertDescriptionProps{}, Text("This alert can be shown or hidden using Datastar.")),
 					),
 				),
 			),
 		),
 
 		subsection("Dynamic Progress",
-			h.Div(
+			Div(
 				data.Signals(map[string]any{"progress": 33}),
-				h.Class("flex flex-col gap-4 w-60"),
-				h.Div(
-					h.Class("bg-primary/20 relative h-2 w-full overflow-hidden rounded-full"),
-					h.Div(
-						h.Class("bg-primary h-full transition-all"),
+				Class("flex flex-col gap-4 w-60"),
+				Div(
+					Class("bg-primary/20 relative h-2 w-full overflow-hidden rounded-full"),
+					Div(
+						Class("bg-primary h-full transition-all"),
 						data.Style("width", "$progress + '%'"),
 					),
 				),
-				h.Div(
-					h.Class("flex gap-2"),
+				Div(
+					Class("flex gap-2"),
 					ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm},
 						data.On("click", "$progress = Math.max(0, $progress - 10)"),
-						g.Text("-10"),
+						Text("-10"),
 					),
 					ui.Button(ui.ButtonProps{Size: ui.ButtonSizeSm},
 						data.On("click", "$progress = Math.min(100, $progress + 10)"),
-						g.Text("+10"),
+						Text("+10"),
 					),
 				),
 			),
@@ -711,25 +724,41 @@ func interactiveSection() g.Node {
 	)
 }
 
-func section(title string, children ...g.Node) g.Node {
-	return h.Section(
-		h.Class("mb-12"),
-		h.H2(
-			h.Class("text-2xl font-semibold mb-4 pb-2 border-b"),
-			g.Text(title),
+func section(title string, children ...Node) Node {
+	return sectionWithSource(title, "", children...)
+}
+
+func sectionWithSource(title, sourceFile string, children ...Node) Node {
+	headerContent := []Node{
+		Span(Text(title)),
+	}
+	if sourceFile != "" {
+		headerContent = append(headerContent,
+			A(
+				Href("https://github.com/maragudk/gomponents-shadcn-ui/blob/main/"+sourceFile),
+				Class("text-sm font-normal text-muted-foreground hover:text-foreground ml-2"),
+				Text("View Source"),
+			),
+		)
+	}
+	return Section(
+		Class("mb-12"),
+		H2(
+			Class("text-2xl font-semibold mb-4 pb-2 border-b flex items-baseline"),
+			Group(headerContent),
 		),
-		g.Group(children),
+		Group(children),
 	)
 }
 
-func subsection(title string, children ...g.Node) g.Node {
-	return h.Div(
-		h.Class("mb-6"),
-		h.H3(
-			h.Class("text-lg font-medium mb-3"),
-			g.Text(title),
+func subsection(title string, children ...Node) Node {
+	return Div(
+		Class("mb-6"),
+		H3(
+			Class("text-lg font-medium mb-3"),
+			Text(title),
 		),
-		g.Group(children),
+		Group(children),
 	)
 }
 
