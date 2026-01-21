@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@source "./cmd/demo/**/*.go";
-@source "./*.go";
 
 /* shadcn/ui theme variables */
 @theme {
