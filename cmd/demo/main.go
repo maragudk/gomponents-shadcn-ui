@@ -57,6 +57,7 @@ func page() g.Node {
 				labelSection(),
 				separatorSection(),
 				skeletonSection(),
+				textareaSection(),
 			),
 		},
 	})
@@ -368,6 +369,31 @@ func skeletonSection() g.Node {
 					ui.Skeleton(ui.SkeletonProps{}, h.Class("h-4 w-[200px]")),
 				),
 			),
+		),
+	)
+}
+
+func textareaSection() g.Node {
+	return section("Textarea",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Displays a form textarea or a component that looks like a textarea."),
+		),
+
+		subsection("Default",
+			ui.Textarea(ui.TextareaProps{}, h.Class("max-w-sm"), h.Placeholder("Type your message here.")),
+		),
+
+		subsection("With Label",
+			h.Div(
+				h.Class("flex flex-col gap-2 max-w-sm"),
+				ui.Label(ui.LabelProps{}, h.For("message"), g.Text("Your message")),
+				ui.Textarea(ui.TextareaProps{}, h.ID("message"), h.Placeholder("Type your message here.")),
+			),
+		),
+
+		subsection("Disabled",
+			ui.Textarea(ui.TextareaProps{}, h.Class("max-w-sm"), h.Disabled(), h.Placeholder("Disabled")),
 		),
 	)
 }
