@@ -53,6 +53,7 @@ func page() g.Node {
 				buttonSection(),
 				cardSection(),
 				labelSection(),
+				separatorSection(),
 			),
 		},
 	})
@@ -247,6 +248,35 @@ func labelSection() g.Node {
 					h.ID("email"),
 					h.Placeholder("Enter your email"),
 					h.Class("flex h-9 w-full max-w-sm rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"),
+				),
+			),
+		),
+	)
+}
+
+func separatorSection() g.Node {
+	return section("Separator",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Visually or semantically separates content."),
+		),
+
+		subsection("Horizontal",
+			h.Div(
+				h.Class("space-y-4"),
+				h.Div(
+					h.Class("space-y-1"),
+					h.H4(h.Class("text-sm font-medium leading-none"), g.Text("Radix Primitives")),
+					h.P(h.Class("text-sm text-muted-foreground"), g.Text("An open-source UI component library.")),
+				),
+				ui.Separator(ui.SeparatorProps{}),
+				h.Div(
+					h.Class("flex h-5 items-center space-x-4 text-sm"),
+					h.Div(g.Text("Blog")),
+					ui.Separator(ui.SeparatorProps{Orientation: ui.SeparatorOrientationVertical}),
+					h.Div(g.Text("Docs")),
+					ui.Separator(ui.SeparatorProps{Orientation: ui.SeparatorOrientationVertical}),
+					h.Div(g.Text("Source")),
 				),
 			),
 		),
