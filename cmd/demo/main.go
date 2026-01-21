@@ -49,6 +49,7 @@ func page() g.Node {
 				h.Class("container mx-auto py-12 px-4 max-w-4xl"),
 				header(),
 				alertSection(),
+				aspectRatioSection(),
 				avatarSection(),
 				badgeSection(),
 				breadcrumbSection(),
@@ -106,6 +107,37 @@ func alertSection() g.Node {
 				g.Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>`),
 				ui.AlertTitle(ui.AlertTitleProps{}, g.Text("Error")),
 				ui.AlertDescription(ui.AlertDescriptionProps{}, g.Text("Your session has expired. Please log in again.")),
+			),
+		),
+	)
+}
+
+func aspectRatioSection() g.Node {
+	return section("Aspect Ratio",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Displays content within a desired ratio."),
+		),
+
+		subsection("16:9",
+			h.Div(
+				h.Class("w-[450px]"),
+				ui.AspectRatio(ui.AspectRatioProps{Ratio: 16.0 / 9.0},
+					h.Img(
+						h.Src("https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"),
+						h.Alt("Photo by Drew Beamer"),
+						h.Class("rounded-md object-cover"),
+					),
+				),
+			),
+		),
+
+		subsection("Square",
+			h.Div(
+				h.Class("w-[200px]"),
+				ui.AspectRatio(ui.AspectRatioProps{Ratio: 1},
+					h.Div(h.Class("bg-muted flex items-center justify-center rounded-md"), g.Text("1:1")),
+				),
 			),
 		),
 	)
