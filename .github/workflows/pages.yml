@@ -31,6 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          check-latest: true
+      - name: Generate demo
+        run: go run ./cmd/demo
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
