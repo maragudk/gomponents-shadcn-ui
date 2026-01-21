@@ -48,6 +48,7 @@ func page() g.Node {
 			h.Div(
 				h.Class("container mx-auto py-12 px-4 max-w-4xl"),
 				header(),
+				avatarSection(),
 				badgeSection(),
 				buttonSection(),
 				labelSection(),
@@ -72,6 +73,51 @@ func header() g.Node {
 				g.Text("gomponents"),
 			),
 			g.Text("."),
+		),
+	)
+}
+
+func avatarSection() g.Node {
+	return section("Avatar",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("An image element with a fallback for representing the user."),
+		),
+
+		subsection("With Image",
+			h.Div(
+				h.Class("flex flex-wrap gap-4"),
+				ui.Avatar(ui.AvatarProps{},
+					ui.AvatarImage(ui.AvatarImageProps{}, h.Src("https://github.com/shadcn.png"), h.Alt("@shadcn")),
+				),
+			),
+		),
+
+		subsection("With Fallback",
+			h.Div(
+				h.Class("flex flex-wrap gap-4"),
+				ui.Avatar(ui.AvatarProps{},
+					ui.AvatarFallback(ui.AvatarFallbackProps{}, g.Text("CN")),
+				),
+			),
+		),
+
+		subsection("Sizes",
+			h.Div(
+				h.Class("flex flex-wrap items-center gap-4"),
+				ui.Avatar(ui.AvatarProps{}, h.Class("size-6"),
+					ui.AvatarFallback(ui.AvatarFallbackProps{}, h.Class("text-xs"), g.Text("XS")),
+				),
+				ui.Avatar(ui.AvatarProps{},
+					ui.AvatarFallback(ui.AvatarFallbackProps{}, g.Text("SM")),
+				),
+				ui.Avatar(ui.AvatarProps{}, h.Class("size-12"),
+					ui.AvatarFallback(ui.AvatarFallbackProps{}, g.Text("MD")),
+				),
+				ui.Avatar(ui.AvatarProps{}, h.Class("size-16"),
+					ui.AvatarFallback(ui.AvatarFallbackProps{}, h.Class("text-lg"), g.Text("LG")),
+				),
+			),
 		),
 	)
 }
