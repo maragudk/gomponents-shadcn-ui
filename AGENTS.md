@@ -35,6 +35,7 @@ When working on issues:
 
 ## Component Development
 
+- **Style reference**: Use shadcn/ui **New York v4** styles from `ui/apps/v4/registry/new-york-v4/ui/`
 - When adding a new component, update the demo page in `cmd/demo/main.go`
 - When updating a component, check that any new style variables are added to `tailwind.css`
 
