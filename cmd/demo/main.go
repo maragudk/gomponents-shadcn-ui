@@ -65,6 +65,7 @@ func page() Node {
 				radioGroupSection(),
 				separatorSection(),
 				skeletonSection(),
+				sliderSection(),
 				switchSection(),
 				tableSection(),
 				textareaSection(),
@@ -738,6 +739,56 @@ func skeletonSection() Node {
 							P(Class("text-sm text-muted-foreground"), Text("sofia@example.com")),
 						),
 					),
+				),
+			),
+		),
+	)
+}
+
+func sliderSection() Node {
+	return sectionWithSource("Slider", "slider.go",
+		P(
+			Class("text-muted-foreground mb-6"),
+			Text("An input where the user selects a value from within a given range."),
+		),
+
+		subsection("Default",
+			Div(
+				Class("w-60"),
+				ui.Slider(ui.SliderProps{}, Min("0"), Max("100"), Value("50")),
+			),
+		),
+
+		subsection("Different Values",
+			Div(
+				Class("flex flex-col gap-6 w-60"),
+				ui.Slider(ui.SliderProps{}, Min("0"), Max("100"), Value("0")),
+				ui.Slider(ui.SliderProps{}, Min("0"), Max("100"), Value("25")),
+				ui.Slider(ui.SliderProps{}, Min("0"), Max("100"), Value("50")),
+				ui.Slider(ui.SliderProps{}, Min("0"), Max("100"), Value("75")),
+				ui.Slider(ui.SliderProps{}, Min("0"), Max("100"), Value("100")),
+			),
+		),
+
+		subsection("Disabled",
+			Div(
+				Class("w-60"),
+				ui.Slider(ui.SliderProps{}, Min("0"), Max("100"), Value("50"), Disabled()),
+			),
+		),
+
+		subsection("Interactive",
+			Div(
+				data.Signals(map[string]any{"sliderValue": 50}),
+				Class("flex flex-col gap-4 w-60"),
+				ui.Slider(ui.SliderProps{},
+					Min("0"), Max("100"),
+					data.Bind("sliderValue"),
+				),
+				Span(
+					Class("text-sm text-muted-foreground"),
+					Text("Value: "),
+					Span(data.Text("$sliderValue")),
 				),
 			),
 		),
