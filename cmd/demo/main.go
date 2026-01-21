@@ -62,6 +62,7 @@ func page() Node {
 				inputSection(),
 				labelSection(),
 				paginationSection(),
+				popoverSection(),
 				progressSection(),
 				radioGroupSection(),
 				separatorSection(),
@@ -591,6 +592,46 @@ func paginationSection() Node {
 					),
 					ui.PaginationItem(ui.PaginationItemProps{},
 						ui.PaginationNext(ui.PaginationNextProps{}, Href("#")),
+					),
+				),
+			),
+		),
+	)
+}
+
+func popoverSection() Node {
+	return sectionWithSource("Popover", "popover.go",
+		subsection("Default",
+			ui.Popover(ui.PopoverProps{},
+				data.Signals(map[string]any{"popoverOpen": false}),
+				ui.PopoverTrigger(ui.PopoverTriggerProps{},
+					ui.Button(ui.ButtonProps{Variant: ui.ButtonVariantOutline},
+						data.On("click", "popoverOpen = !popoverOpen"),
+						Text("Open popover"),
+					),
+				),
+				ui.PopoverContent(ui.PopoverContentProps{},
+					data.Show("popoverOpen"),
+					Div(
+						Class("grid gap-4"),
+						Div(
+							Class("space-y-2"),
+							H4(Class("font-medium leading-none"), Text("Dimensions")),
+							P(Class("text-sm text-muted-foreground"), Text("Set the dimensions for the layer.")),
+						),
+						Div(
+							Class("grid gap-2"),
+							Div(
+								Class("grid grid-cols-3 items-center gap-4"),
+								ui.Label(ui.LabelProps{}, For("width"), Text("Width")),
+								ui.Input(ui.InputProps{}, ID("width"), Value("100%"), Class("col-span-2 h-8")),
+							),
+							Div(
+								Class("grid grid-cols-3 items-center gap-4"),
+								ui.Label(ui.LabelProps{}, For("height"), Text("Height")),
+								ui.Input(ui.InputProps{}, ID("height"), Value("25px"), Class("col-span-2 h-8")),
+							),
+						),
 					),
 				),
 			),
