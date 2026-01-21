@@ -58,6 +58,7 @@ func page() g.Node {
 				checkboxSection(),
 				inputSection(),
 				labelSection(),
+				paginationSection(),
 				progressSection(),
 				separatorSection(),
 				skeletonSection(),
@@ -424,6 +425,40 @@ func labelSection() g.Node {
 				h.Class("flex flex-col gap-2"),
 				ui.Label(ui.LabelProps{}, h.For("email"), g.Text("Email")),
 				ui.Input(ui.InputProps{}, h.Type("email"), h.ID("email"), h.Placeholder("Enter your email"), h.Class("max-w-sm")),
+			),
+		),
+	)
+}
+
+func paginationSection() g.Node {
+	return section("Pagination",
+		h.P(
+			h.Class("text-muted-foreground mb-6"),
+			g.Text("Pagination with page navigation, next and previous links."),
+		),
+
+		subsection("Default",
+			ui.Pagination(ui.PaginationProps{},
+				ui.PaginationContent(ui.PaginationContentProps{},
+					ui.PaginationItem(ui.PaginationItemProps{},
+						ui.PaginationPrevious(ui.PaginationPreviousProps{}, h.Href("#")),
+					),
+					ui.PaginationItem(ui.PaginationItemProps{},
+						ui.PaginationLink(ui.PaginationLinkProps{}, h.Href("#"), g.Text("1")),
+					),
+					ui.PaginationItem(ui.PaginationItemProps{},
+						ui.PaginationLink(ui.PaginationLinkProps{IsActive: true}, h.Href("#"), g.Text("2")),
+					),
+					ui.PaginationItem(ui.PaginationItemProps{},
+						ui.PaginationLink(ui.PaginationLinkProps{}, h.Href("#"), g.Text("3")),
+					),
+					ui.PaginationItem(ui.PaginationItemProps{},
+						ui.PaginationEllipsis(ui.PaginationEllipsisProps{}),
+					),
+					ui.PaginationItem(ui.PaginationItemProps{},
+						ui.PaginationNext(ui.PaginationNextProps{}, h.Href("#")),
+					),
+				),
 			),
 		),
 	)
