@@ -63,6 +63,7 @@ func page() Node {
 				collapsibleSection(),
 				dialogSection(),
 				dropdownMenuSection(),
+				hoverCardSection(),
 				inputSection(),
 				labelSection(),
 				paginationSection(),
@@ -673,6 +674,37 @@ func dropdownMenuSection() Node {
 					ui.DropdownMenuItem(ui.DropdownMenuItemProps{Variant: ui.DropdownMenuItemVariantDestructive},
 						Text("Log out"),
 						ui.DropdownMenuShortcut(ui.DropdownMenuShortcutProps{}, Text("⇧⌘Q")),
+					),
+				),
+			),
+		),
+	)
+}
+
+func hoverCardSection() Node {
+	return sectionWithSource("Hover Card", "hovercard.go",
+		subsection("Default",
+			ui.HoverCard(ui.HoverCardProps{},
+				ui.HoverCardTrigger(ui.HoverCardTriggerProps{},
+					A(
+						Href("#"),
+						Class("underline"),
+						Text("@nextjs"),
+					),
+				),
+				ui.HoverCardContent(ui.HoverCardContentProps{},
+					Div(
+						Class("flex justify-between space-x-4"),
+						Div(
+							Class("space-y-1"),
+							H4(Class("text-sm font-semibold"), Text("@nextjs")),
+							P(Class("text-sm"), Text("The React Framework – created and maintained by @vercel.")),
+							Div(
+								Class("flex items-center pt-2"),
+								Raw(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 size-4 opacity-70"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>`),
+								Span(Class("text-xs text-muted-foreground"), Text("Joined December 2021")),
+							),
+						),
 					),
 				),
 			),
