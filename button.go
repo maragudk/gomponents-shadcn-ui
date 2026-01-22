@@ -49,6 +49,10 @@ func Button(props ButtonProps, children ...Node) Node {
 
 // ButtonA renders an anchor element styled as a button.
 // Pass additional attributes (like [h.Href], [h.Class]) and children as needed.
+//
+// Note: Anchor elements don't support the disabled attribute. To create a disabled anchor button,
+// add [h.Aria]("disabled", "true") for screen readers, [h.TabIndex]("-1") to prevent keyboard focus,
+// [h.Class]("pointer-events-none opacity-50") for visual styling, and handle click prevention in your code.
 func ButtonA(props ButtonProps, children ...Node) Node {
 	return h.A(
 		JoinAttrs("class",
